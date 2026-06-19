@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoSync Case Study — Naya Kusuma</title>
+  <meta name="description" content="Case study for EcoSync, digitizing the circular waste economy." />
+  
+  <style>
+    /* 
+      =========================================
+      CORE VARIABLES & RESET
+      =========================================
+    */
+    :root {
+      --bg-color: #FAF9F6;
+      --bg-card: rgba(255, 255, 255, 0.7);
+      --bg-card-solid: #FFFFFF;
+      --text: #1D1D1F;
+      --text-light: #6E6E73;
+      --border: rgba(0, 0, 0, 0.08);
+      
+      /* EcoSync Brand Accents */
+      --brand-primary: #27AE60;
+      --brand-secondary: #F2994A;
+      --brand-glow: rgba(39, 174, 96, 0.15);
+      
+      --radius-sm: 12px;
+      --radius: 20px;
+      --radius-lg: 32px;
+      --radius-xl: 48px;
+      
+      --shadow-sm: 0 4px 24px rgba(0,0,0,0.04);
+      --shadow: 0 16px 40px rgba(0,0,0,0.08);
+      --shadow-lg: 0 32px 64px rgba(39, 174, 96, 0.15);
+      
+      --max-w: 1100px;
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .ambient-glow::before, .ambient-glow::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: floatGlow 20s infinite alternate ease-in-out;
+    }
+    .ambient-glow::before {
+      width: 600px; height: 600px;
+      background: var(--brand-glow);
+      top: -100px; left: -200px;
+    }
+    .ambient-glow::after {
+      width: 500px; height: 500px;
+      background: rgba(242, 153, 74, 0.1); /* Orange glow */
+      bottom: 20%; right: -150px;
+      animation-delay: -10s;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 100px) scale(1.2); }
+    }
+
+    /* 
+      =========================================
+      TYPOGRAPHY
+      =========================================
+    */
+    .cs-subtitle { 
+      font-size: 13px; 
+      color: var(--brand-primary); 
+      font-weight: 700; 
+      letter-spacing: 0.1em; 
+      text-transform: uppercase; 
+      margin-bottom: 12px;
+      display: block;
+    }
+    .cs-section-title { 
+      font-size: clamp(28px, 4vw, 48px); 
+      font-weight: 800; 
+      letter-spacing: -0.03em; 
+      line-height: 1.1;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .cs-paragraph { 
+      font-size: 18px; 
+      color: var(--text-light); 
+      line-height: 1.6; 
+      max-width: 720px; 
+      margin-bottom: 32px;
+    }
+
+    /* 
+      =========================================
+      NAVIGATION
+      =========================================
+    */
+    .cs-nav {
+      position: fixed;
+      top: 24px;
+      left: 0; right: 0;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .cs-nav .container { display: flex; justify-content: flex-start; }
+    .btn-back {
+      pointer-events: auto;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-weight: 600; font-size: 14px; color: var(--text);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      transition: var(--transition);
+    }
+    .btn-back:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* 
+      =========================================
+      EDITORIAL HERO SECTION
+      =========================================
+    */
+    .cs-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 0 60px;
+      position: relative;
+    }
+    .cs-hero-title {
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 24px;
+      color: var(--text);
+      z-index: 2;
+      position: relative;
+    }
+    .cs-hero-title span { color: var(--brand-primary); }
+    
+    .tags {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .tag {
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      font-size: 13px; font-weight: 600; color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Floating Meta Box */
+    .cs-hero-meta {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 24px;
+      box-shadow: var(--shadow);
+      margin-top: 40px;
+    }
+    .meta-group h4 { font-size: 12px; text-transform: uppercase; color: var(--text-light); margin-bottom: 6px; letter-spacing: 0.05em; font-weight: 700; }
+    .meta-group p { font-size: 15px; font-weight: 600; color: var(--text); }
+    .meta-group p span { font-weight: 400; color: var(--text-light); font-size: 13px; display: block; margin-top: 2px; }
+
+    /* 
+      =========================================
+      LAYOUT: TOC + CONTENT
+      =========================================
+    */
+    .cs-layout {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 60px 32px 120px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 64px;
+    }
+    .cs-section { margin-bottom: 120px; scroll-margin-top: 100px; position: relative; }
+
+    /* Table of Contents (Sidebar) */
+    .cs-toc {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+    .cs-toc-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+    .cs-toc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-left: 2px solid var(--border);
+      padding-left: 16px;
+    }
+    .cs-toc-link {
+      font-size: 14px;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    .cs-toc-link:hover { color: var(--text); }
+    .cs-toc-link.active {
+      color: var(--brand-primary);
+      font-weight: 700;
+    }
+    .cs-toc-link.active::before {
+      content: '';
+      position: absolute;
+      left: -19px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 16px;
+      background: var(--brand-primary);
+      border-radius: 4px;
+    }
+
+    /* The Problem (Magazine Pull-Quotes) */
+    .pull-quotes-container { display: flex; flex-direction: column; gap: 32px; }
+    .pull-quote {
+      position: relative;
+      padding: 48px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: var(--shadow-sm);
+    }
+    .pull-quote::before {
+      content: '“';
+      position: absolute;
+      top: -20px; left: 24px;
+      font-size: 120px;
+      font-family: serif;
+      line-height: 1;
+      color: var(--brand-glow);
+      z-index: -1;
+    }
+    .pull-quote p.quote-text {
+      font-size: clamp(20px, 2.5vw, 24px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .pull-quote p.quote-author {
+      font-size: 14px; font-weight: 700; color: var(--brand-primary); text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    /* Research Findings (Bento Box) */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: minmax(160px, auto);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .bento-item {
+      background: var(--bg-card-solid);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex; flex-direction: column; justify-content: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .bento-item:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    
+    .bento-item h3 { font-size: 40px; line-height: 1; margin-bottom: 12px; color: var(--text); letter-spacing: -0.04em; }
+    .bento-item p { font-size: 15px; color: var(--text-light); font-weight: 500; line-height: 1.5; }
+
+    .bento-large { grid-column: span 2; grid-row: span 2; background: var(--brand-primary); color: white; border: none; }
+    .bento-large h3 { font-size: clamp(64px, 7vw, 100px); color: white; margin-bottom: 24px; }
+    .bento-large p { font-size: 18px; color: rgba(255,255,255,0.9); }
+    
+    .bento-wide { grid-column: span 2; }
+
+    /* Design Process (Editorial Timeline) */
+    .process-timeline {
+      margin-top: 48px;
+      position: relative;
+    }
+    .process-timeline::before {
+      content: ''; position: absolute; left: 40px; top: 0; bottom: 0; width: 2px; background: var(--border);
+    }
+    .process-step {
+      position: relative;
+      padding-left: 100px;
+      margin-bottom: 56px;
+    }
+    .process-step::before {
+      content: attr(data-step);
+      position: absolute;
+      left: 20px; top: 0;
+      width: 40px; height: 40px;
+      background: var(--bg-card-solid);
+      border: 2px solid var(--brand-primary);
+      color: var(--brand-primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800;
+      z-index: 2;
+    }
+    .process-step::after {
+      content: attr(data-step);
+      position: absolute;
+      left: 100px; top: -30px;
+      font-size: 100px; font-weight: 900;
+      color: var(--border);
+      opacity: 0.4; z-index: -1;
+      line-height: 1;
+    }
+    .process-step h3 { font-size: 24px; margin-bottom: 8px; color: var(--text); }
+    .process-step p { font-size: 16px; color: var(--text-light); line-height: 1.6; max-width: 600px; }
+
+    /* Key Decisions (Overlapping Cards) */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .decision-card {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .decision-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--text); line-height: 1.3; }
+    .decision-card p { font-size: 15px; color: var(--text-light); line-height: 1.6; }
+
+    /* Image Placeholders */
+    .ui-placeholder {
+      width: 100%; height: 500px;
+      background: var(--bg-card);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-xl);
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      margin-top: 32px;
+      color: var(--text-light);
+    }
+
+    /* Outcome Reflection - Clean List */
+    .outcome-list { display: flex; flex-direction: column; margin-top: 40px; }
+    .outcome-item {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+    }
+    .outcome-item:last-child { border-bottom: 1px solid var(--border); }
+    .outcome-item h3 { font-size: 20px; color: var(--text); margin: 0; }
+    .outcome-item p { margin: 0; font-size: 16px; color: var(--text-light); line-height: 1.6; }
+
+    /* Next Project Footer */
+    .cs-footer {
+      padding: 80px 0 120px;
+      text-align: center;
+      position: relative;
+    }
+    .cs-footer::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 160px; height: 2px; background: var(--border);
+    }
+    .next-project-link {
+      display: inline-block;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.04em;
+      transition: var(--transition);
+      margin-top: 16px;
+    }
+    .next-project-link:hover { color: #27AE60; transform: translateY(-8px); }
+
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .cs-layout { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px 80px; }
+      .cs-toc { display: none; }
+      .cs-hero { padding: 100px 0 20px; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-large, .bento-wide { grid-column: span 1; }
+      .pull-quote { padding: 32px; }
+      .process-timeline::before { left: 24px; }
+      .process-step { padding-left: 64px; }
+      .process-step::before { left: 4px; }
+      .process-step::after { display: none; }
+      .outcome-item { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+
+  <!-- Navigation -->
+  <nav class="cs-nav">
+    <div class="container">
+      <a href="index.html" class="btn-back">
+        <span aria-hidden="true">←</span> Back
+      </a>
+    </div>
+  </nav>
+
+  <!-- Editorial Hero -->
+  <section class="cs-hero container">
+    <div class="reveal">
+      <div class="tags">
+        <span class="tag">Circular economy</span>
+        <span class="tag">Waste tech</span>
+        <span class="tag">B2B marketplace</span>
+        <span class="tag">Figma</span>
+        <span class="tag">Design thinking</span>
+      </div>
+      <h1 class="cs-hero-title">EcoSync: digitizing the <br><span>circular waste</span> economy.</h1>
+      <p class="cs-paragraph" style="max-width: 700px; font-size: 20px;">
+        A B2B data-driven marketplace that connects commercial waste producers, collectors (pengepul), and recycling industries, turning disposal costs into revenue streams.
+      </p>
+    </div>
+
+    <!-- Floating Meta -->
+    <div class="cs-hero-meta reveal">
+      <div class="meta-group">
+        <h4>Role</h4>
+        <p>UI/UX Designer<span>(UX research + UI designer)</span></p>
+      </div>
+      <div class="meta-group">
+        <h4>Team</h4>
+        <p>With Maulana Daviq · Eva Yunia</p>
+      </div>
+      <div class="meta-group">
+        <h4>Duration</h4>
+        <p>4 weeks, Okt–Nov 2025</p>
+      </div>
+      <div class="meta-group">
+        <h4>Tools</h4>
+        <p>Figma, Google Forms, Zoom</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Layout Grid -->
+  <div class="cs-layout">
+    
+    <!-- Sidebar TOC -->
+    <aside class="cs-toc reveal">
+      <p class="cs-toc-title">Contents</p>
+      <ul class="cs-toc-list">
+        <li><a href="#problem" class="cs-toc-link">1. The Problem</a></li>
+        <li><a href="#personas" class="cs-toc-link">2. User Personas</a></li>
+        <li><a href="#research" class="cs-toc-link">3. Research</a></li>
+        <li><a href="#process" class="cs-toc-link">4. Process</a></li>
+        <li><a href="#logic" class="cs-toc-link">5. Logic</a></li>
+        <li><a href="#features" class="cs-toc-link">6. Features</a></li>
+        <li><a href="#output" class="cs-toc-link">7. The Output</a></li>
+        <li><a href="#reflection" class="cs-toc-link">8. Reflection</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="cs-content">
+
+      <!-- 1. The Problem -->
+      <section id="problem" class="cs-section reveal">
+        <span class="cs-subtitle">01 / The Problem</span>
+        <h2 class="cs-section-title">The inefficiency of waste</h2>
+        <p class="cs-paragraph">
+          Indonesia generates 36.9M tons of waste per year, but only 32.3% is managed. The tragic irony: companies pay to throw away recyclables that could be sold, simply because they can't find reliable buyers. Digitizing waste supply chains can improve efficiency by up to 40% (Waste4Change).
+        </p>
+
+        <div class="pull-quotes-container">
+          <div class="pull-quote">
+            <p class="quote-text">"75% of small business owners have no fixed waste collector partner — they have no idea where their recyclables actually go."</p>
+            <p class="quote-author">Survey finding, pelaku usaha side (n=16)</p>
+          </div>
+          <div class="pull-quote">
+            <p class="quote-text">"88% of collectors face inconsistent market prices, and 75% struggle to find reliable new waste sources — they're flying blind every day."</p>
+            <p class="quote-author">Survey finding, pengepul side (n=15)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. User Personas -->
+      <section id="personas" class="cs-section reveal">
+        <span class="cs-subtitle">02 / Personas</span>
+        <h2 class="cs-section-title">Who are we designing for?</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+          <!-- Persona 1 (Green theme) -->
+          <div style="background: rgba(39,174,96,0.05); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 24px;">
+              <div style="display: flex; gap: 16px; align-items: center;">
+                <div style="width: 48px; height: 48px; background: var(--brand-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px;">D</div>
+                <div>
+                  <h3 style="font-size: 20px; color: var(--text); margin-bottom: 2px;">Dinda, 34</h3>
+                  <p style="font-size: 14px; color: var(--text-light);">Laundry owner, Jakarta</p>
+                </div>
+              </div>
+              <span style="background: rgba(39,174,96,0.1); color: var(--brand-primary); padding: 6px 12px; border-radius: 100px; font-size: 12px; font-weight: 700;">Penghasil Limbah</span>
+            </div>
+            <ul style="display: flex; flex-direction: column; gap: 12px; font-size: 15px; color: var(--text-light);">
+              <li style="display: flex; gap: 12px;"><span style="color: var(--brand-primary);">△</span> No fixed collector partner. Pays extra fees to dispose of plastic + water waste that could be sold.</li>
+              <li style="display: flex; gap: 12px;"><span style="color: var(--brand-primary);">△</span> Wants to sell waste easily, earn extra income, and contribute to sustainable business practices.</li>
+              <li style="display: flex; gap: 12px;"><span style="color: var(--brand-primary);">△</span> Needs: collector finder, live market price, auto pickup scheduling, environmental impact report.</li>
+            </ul>
+          </div>
+          
+          <!-- Persona 2 (Orange theme) -->
+          <div style="background: rgba(242,153,74,0.05); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 24px;">
+              <div style="display: flex; gap: 16px; align-items: center;">
+                <div style="width: 48px; height: 48px; background: var(--brand-secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px;">PJ</div>
+                <div>
+                  <h3 style="font-size: 20px; color: var(--text); margin-bottom: 2px;">Pak Joko, 48</h3>
+                  <p style="font-size: 14px; color: var(--text-light);">Independent collector, Bekasi</p>
+                </div>
+              </div>
+              <span style="background: rgba(242,153,74,0.1); color: var(--brand-secondary); padding: 6px 12px; border-radius: 100px; font-size: 12px; font-weight: 700;">Pengepul</span>
+            </div>
+            <ul style="display: flex; flex-direction: column; gap: 12px; font-size: 15px; color: var(--text-light);">
+              <li style="display: flex; gap: 12px;"><span style="color: var(--brand-secondary);">△</span> Travels far without price certainty. No real-time market data. Hard to find consistent sorted waste sources.</li>
+              <li style="display: flex; gap: 12px;"><span style="color: var(--brand-secondary);">△</span> Wants a transparent digital platform to find nearby listings, negotiate prices, and track pickups.</li>
+              <li style="display: flex; gap: 12px;"><span style="color: var(--brand-secondary);">△</span> Needs: nearby stock info (93%), digital price negotiation (73%), pickup tracking (53%).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Research Findings -->
+      <section id="research" class="cs-section reveal">
+        <span class="cs-subtitle">03 / Research</span>
+        <h2 class="cs-section-title">Validating the assumption</h2>
+        <p class="cs-paragraph" style="font-weight: 500; font-size: 16px; color: var(--brand-primary);">31 respondents — 16 pelaku usaha (penghasil limbah) · 15 pengepul/pengelola limbah · Jabodetabek area</p>
+
+        <div class="bento-grid">
+          <div class="bento-item bento-large">
+            <h3>90%</h3>
+            <p>of business owners want a nearby collector finder as the top feature</p>
+          </div>
+          <div class="bento-item bento-wide">
+            <h3>95%</h3>
+            <p>of pelaku usaha would try the platform if the process is easy and informative.</p>
+          </div>
+          <div class="bento-item">
+            <h3>93%</h3>
+            <p>of collectors say nearby stock info + live pricing is the most critical feature.</p>
+          </div>
+          <div class="bento-item">
+            <h3>85%</h3>
+            <p>of business owners lack time and info on proper waste management.</p>
+          </div>
+          <div class="bento-item bento-wide">
+            <h3 style="font-size: 32px; margin-bottom: 8px;">88%</h3>
+            <p>of collectors face inconsistent market prices with no reliable reference.</p>
+          </div>
+          <div class="bento-item bento-wide">
+            <h3 style="font-size: 32px; margin-bottom: 8px;">40%</h3>
+            <p>efficiency gain possible by digitizing waste supply chains (Waste4Change).</p>
+          </div>
+        </div>
+        
+
+      </section>
+
+      <!-- 4. Process -->
+      <section id="process" class="cs-section reveal">
+        <span class="cs-subtitle">04 / Process</span>
+        <h2 class="cs-section-title">How we got there</h2>
+
+        <div class="process-timeline">
+          <div class="process-step" data-step="1">
+            <h3>Empathize</h3>
+            <p>In-depth interviews with business owners and collectors. Online questionnaire across Jabodetabek. Observation of waste handling behavior at end of operational hours.</p>
+          </div>
+          <div class="process-step" data-step="2">
+            <h3>Define</h3>
+            <p>4 core pain points identified: no direct B2B connection, zero price transparency, no waste value tool, no readable environmental reporting. These directly mapped to EcoSync's feature set.</p>
+          </div>
+          <div class="process-step" data-step="3">
+            <h3>Ideate</h3>
+            <p>Brainstorming + user flow mapping. Prioritized 4 features: waste value calculator, live price dashboard, collector connection system, environmental impact report.</p>
+          </div>
+          <div class="process-step" data-step="4">
+            <h3>Prototype</h3>
+            <p>Lo-fi wireframe (navigation structure, role separation). Then high-fidelity with two distinct visual identities: green for pelaku usaha (sustainability), orange for pengepul (action + movement).</p>
+          </div>
+          <div class="process-step" data-step="5">
+            <h3>Test + iterate</h3>
+            <p>Feedback sessions with pengepul, pelaku usaha, and an environmental consultant. Fixed confusing terminology on the calculator flow to use standard market terms.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Key Decisions -->
+      <section id="logic" class="cs-section reveal">
+        <span class="cs-subtitle">05 / Logic</span>
+        <h2 class="cs-section-title">Key design decisions</h2>
+        <p class="cs-paragraph">The "why" behind the screens.</p>
+
+        <div class="decisions-grid">
+          <div class="decision-card">
+            <h3>Two separate visual identities: green vs orange</h3>
+            <p>Rather than one neutral UI, we split the experience by role. Green signals sustainability and responsibility for pelaku usaha. Orange signals urgency and action for pengepul who are constantly on the move. Based on Norman's design perception theory, color builds emotional connection between user and system.</p>
+          </div>
+          <div class="decision-card">
+            <h3>Auto waste value calculator as the entry hook</h3>
+            <p>43% of business owners have never calculated financial loss from throwing waste away. The calculator is the first interactive feature on the dashboard, it immediately converts an abstract problem ("I have waste") into a concrete number ("you're losing Rp X/month").</p>
+          </div>
+          <div class="decision-card">
+            <h3>Real-time price transparency as a trust builder</h3>
+            <p>Both sides of the market distrust each other because neither has a price reference. Surfacing live market prices neutralizes negotiation anxiety, collectors can bid with confidence, producers can verify they're not being lowballed.</p>
+          </div>
+          <div class="decision-card">
+            <h3>CSR report as a downloadable PDF</h3>
+            <p>For corporate F&B chains, sustainability managers need tangible reports for stakeholders. A downloadable PDF instantly fits into their existing workflow, providing verified impact metrics without forcing executives to log into the app.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Features by Role -->
+      <section id="features" class="cs-section reveal">
+        <span class="cs-subtitle">06 / Features</span>
+        <h2 class="cs-section-title">Feature breakdown by role</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+          <!-- Producer Features (Green) -->
+          <div style="background: var(--bg-card); border: 2px solid var(--brand-primary); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-sm);">
+            <h3 style="font-size: 24px; color: var(--brand-primary); margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 28px;">🏪</span> Penghasil Limbah
+            </h3>
+            <ul style="display: flex; flex-direction: column; gap: 16px; font-size: 16px; color: var(--text-light); line-height: 1.6;">
+              <li><strong style="color: var(--text);">Dashboard:</strong> monthly waste total, income potential, carbon reduction, waste calculator</li>
+              <li><strong style="color: var(--text);">Jual limbah:</strong> upload waste data (type, volume, location), get matched</li>
+              <li><strong style="color: var(--text);">Dampak lingkungan:</strong> CO₂ reduced, waste diverted, CSR report download (PDF)</li>
+              <li><strong style="color: var(--text);">Order tracking:</strong> real-time pickup status with verification code</li>
+            </ul>
+          </div>
+          
+          <!-- Collector Features (Orange) -->
+          <div style="background: var(--bg-card); border: 2px solid var(--brand-secondary); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-sm);">
+            <h3 style="font-size: 24px; color: var(--brand-secondary); margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 28px;">🚛</span> Pengepul (Collector)
+            </h3>
+            <ul style="display: flex; flex-direction: column; gap: 16px; font-size: 16px; color: var(--text-light); line-height: 1.6;">
+              <li><strong style="color: var(--text);">Nearby waste:</strong> browse active waste listings nearby with distance & volume filters</li>
+              <li><strong style="color: var(--text);">Negotiation:</strong> digital offer system with live market price benchmarks for transparency</li>
+              <li><strong style="color: var(--text);">Pickup route:</strong> optimized multi-stop route planning to save fuel and time</li>
+              <li><strong style="color: var(--text);">Transaction logs:</strong> history of verified pickups, earnings, & material types collected</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Final Design -->
+      <section id="output" class="cs-section reveal">
+        <span class="cs-subtitle">07 / The Output</span>
+        <h2 class="cs-section-title">Final polished UI</h2>
+        
+        <img src="assets/ecosync_final.png" alt="EcoSync Final UI Design" style="width: 100%; height: auto; display: block; border-radius: var(--radius-lg); margin-top: 32px; box-shadow: var(--shadow-sm);">
+      </section>
+
+      <!-- 8. Outcome -->
+      <section id="reflection" class="cs-section reveal">
+        <span class="cs-subtitle">08 / Reflection</span>
+        <h2 class="cs-section-title">Outcome + reflection</h2>
+
+        <div class="outcome-list">
+          <div class="outcome-item">
+            <h3>User validation results</h3>
+            <p>95% of pelaku usaha respondents said they'd try the platform if it's easy and informative. 93% of collectors flagged nearby stock info + live pricing as essential. Both signals confirm EcoSync's core thesis directly matches user pain points.</p>
+          </div>
+          <div class="outcome-item">
+            <h3>What I'd do differently</h3>
+            <p>Formal usability testing wasn't completed, I'd make that non-negotiable next time, especially for the collector-side flow which is more complex. Recruiters respect self-awareness.</p>
+          </div>
+          <div class="outcome-item">
+            <h3>What I learned</h3>
+            <p>Designing for two radically different user types in the same product taught me how much color and information hierarchy can do the work of onboarding, without a single tutorial screen.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="cs-footer reveal">
+    <div class="container">
+      <span class="cs-subtitle" style="text-align: center; color: #1D1D1F;">Next Case Study</span>
+      <a href="index.html#project-cookmate" class="next-project-link">CookMate Smart Recipe App →</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Reveal Animations
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
+
+    reveals.forEach(reveal => revealObserver.observe(reveal));
+
+    // TOC Active State Syncing
+    const sections = document.querySelectorAll('.cs-section');
+    const navLinks = document.querySelectorAll('.cs-toc-link');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+    sections.forEach(sec => sectionObserver.observe(sec));
+
+    // Smooth Scroll for TOC
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

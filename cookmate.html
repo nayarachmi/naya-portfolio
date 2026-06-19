@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CookMate Case Study — Naya Kusuma</title>
+  <meta name="description" content="Case study for CookMate, tech-driven innovation for smarter eating." />
+  
+  <style>
+    /* 
+      =========================================
+      CORE VARIABLES & RESET
+      =========================================
+    */
+    :root {
+      --bg-color: #FAF9F6;
+      --bg-card: rgba(255, 255, 255, 0.7);
+      --bg-card-solid: #FFFFFF;
+      --text: #1D1D1F;
+      --text-light: #6E6E73;
+      --border: rgba(0, 0, 0, 0.08);
+      
+      /* CookMate Brand Accents */
+      --brand-primary: #8CC63F; /* Lime green */
+      --brand-secondary: #E3B04A; /* Warm orange/yellow for secondary */
+      --brand-glow: rgba(140, 198, 63, 0.15);
+      
+      --radius-sm: 12px;
+      --radius: 20px;
+      --radius-lg: 32px;
+      --radius-xl: 48px;
+      
+      --shadow-sm: 0 4px 24px rgba(0,0,0,0.04);
+      --shadow: 0 16px 40px rgba(0,0,0,0.08);
+      --shadow-lg: 0 32px 64px rgba(140, 198, 63, 0.15);
+      
+      --max-w: 1100px;
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .ambient-glow::before, .ambient-glow::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: floatGlow 20s infinite alternate ease-in-out;
+    }
+    .ambient-glow::before {
+      width: 600px; height: 600px;
+      background: var(--brand-glow);
+      top: -100px; left: -200px;
+    }
+    .ambient-glow::after {
+      width: 500px; height: 500px;
+      background: rgba(227, 176, 74, 0.1);
+      bottom: 20%; right: -150px;
+      animation-delay: -10s;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 100px) scale(1.2); }
+    }
+
+    /* 
+      =========================================
+      TYPOGRAPHY
+      =========================================
+    */
+    .cs-subtitle { 
+      font-size: 13px; 
+      color: #6E6E73; 
+      font-weight: 700; 
+      letter-spacing: 0.1em; 
+      text-transform: uppercase; 
+      margin-bottom: 12px;
+      display: block;
+    }
+    .cs-section-title { 
+      font-size: clamp(28px, 4vw, 48px); 
+      font-weight: 800; 
+      letter-spacing: -0.03em; 
+      line-height: 1.1;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .cs-paragraph { 
+      font-size: 18px; 
+      color: var(--text-light); 
+      line-height: 1.6; 
+      max-width: 720px; 
+      margin-bottom: 32px;
+    }
+
+    /* 
+      =========================================
+      NAVIGATION
+      =========================================
+    */
+    .cs-nav {
+      position: fixed;
+      top: 24px;
+      left: 0; right: 0;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .cs-nav .container { display: flex; justify-content: flex-start; }
+    .btn-back {
+      pointer-events: auto;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-weight: 600; font-size: 14px; color: var(--text);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      transition: var(--transition);
+    }
+    .btn-back:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* 
+      =========================================
+      EDITORIAL HERO SECTION
+      =========================================
+    */
+    .cs-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 0 60px;
+      position: relative;
+    }
+    .cs-hero-title {
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 24px;
+      color: var(--text);
+      z-index: 2;
+      position: relative;
+    }
+    .cs-hero-title span { color: var(--brand-primary); }
+    
+    .tags {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .tag {
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      font-size: 13px; font-weight: 600; color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Floating Meta Box */
+    .cs-hero-meta {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 24px;
+      box-shadow: var(--shadow);
+      margin-top: 40px;
+    }
+    .meta-group h4 { font-size: 12px; text-transform: uppercase; color: var(--text-light); margin-bottom: 6px; letter-spacing: 0.05em; font-weight: 700; }
+    .meta-group p { font-size: 15px; font-weight: 600; color: var(--text); }
+    .meta-group p span { font-weight: 400; color: var(--text-light); font-size: 13px; display: block; margin-top: 2px; }
+
+    /* 
+      =========================================
+      LAYOUT: TOC + CONTENT
+      =========================================
+    */
+    .cs-layout {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 60px 32px 120px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 64px;
+    }
+    .cs-section { margin-bottom: 120px; scroll-margin-top: 100px; position: relative; }
+
+    /* Table of Contents (Sidebar) */
+    .cs-toc {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+    .cs-toc-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+    .cs-toc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-left: 2px solid var(--border);
+      padding-left: 16px;
+    }
+    .cs-toc-link {
+      font-size: 14px;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    .cs-toc-link:hover { color: var(--text); }
+    .cs-toc-link.active {
+      color: var(--brand-primary);
+      font-weight: 700;
+    }
+    .cs-toc-link.active::before {
+      content: '';
+      position: absolute;
+      left: -19px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 16px;
+      background: var(--brand-primary);
+      border-radius: 4px;
+    }
+
+    /* Analysis Boxes */
+    .analysis-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .analysis-box {
+      position: relative;
+      padding: 40px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: var(--shadow-sm);
+    }
+    .analysis-box h4 {
+      font-size: 13px; color: var(--brand-primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+    }
+    .analysis-box p {
+      font-size: 16px; font-weight: 500; color: var(--text); font-style: italic; line-height: 1.6;
+    }
+
+    /* Design Process (Editorial Timeline) */
+    .process-timeline {
+      margin-top: 48px;
+      position: relative;
+    }
+    .process-timeline::before {
+      content: ''; position: absolute; left: 40px; top: 0; bottom: 0; width: 2px; background: var(--border);
+    }
+    .process-step {
+      position: relative;
+      padding-left: 100px;
+      margin-bottom: 56px;
+    }
+    .process-step::before {
+      content: attr(data-step);
+      position: absolute;
+      left: 20px; top: 0;
+      width: 40px; height: 40px;
+      background: var(--brand-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800;
+      z-index: 2;
+    }
+    .process-step h3 { font-size: 24px; margin-bottom: 8px; color: var(--text); }
+    .process-step p { font-size: 16px; color: var(--text-light); line-height: 1.6; max-width: 600px; }
+
+    /* Key Decisions (Overlapping Cards) */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .decision-card {
+      background: rgba(140, 198, 63, 0.1);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .decision-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--text); line-height: 1.3; }
+    .decision-card p { font-size: 15px; color: var(--text-light); line-height: 1.6; }
+
+    /* Image Placeholders */
+    .ui-placeholder {
+      width: 100%; height: 500px;
+      background: var(--bg-card);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-xl);
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      margin-top: 32px;
+      color: var(--text-light);
+    }
+
+    /* Outcome Reflection - Clean List */
+    .outcome-list { display: flex; flex-direction: column; gap: 24px; margin-top: 40px; }
+    .outcome-item {
+      padding: 32px;
+      background: var(--bg-card-solid);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .outcome-item h3 { font-size: 20px; color: var(--text); margin-bottom: 12px; }
+    .outcome-item p { margin: 0; font-size: 16px; color: var(--text-light); line-height: 1.6; }
+
+    /* Next Project Footer */
+    .cs-footer {
+      padding: 80px 0 120px;
+      text-align: center;
+      position: relative;
+    }
+    .cs-footer::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 160px; height: 2px; background: var(--border);
+    }
+    .next-project-link {
+      display: inline-block;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.04em;
+      transition: var(--transition);
+      margin-top: 16px;
+    }
+    .next-project-link:hover { color: var(--brand-primary); transform: translateY(-8px); }
+
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .cs-layout { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px 80px; }
+      .cs-toc { display: none; }
+      .cs-hero { padding: 100px 0 20px; }
+      .process-timeline::before { left: 24px; }
+      .process-step { padding-left: 64px; }
+      .process-step::before { left: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+
+  <!-- Navigation -->
+  <nav class="cs-nav">
+    <div class="container">
+      <a href="index.html" class="btn-back">
+        <span aria-hidden="true">←</span> Back
+      </a>
+    </div>
+  </nav>
+
+  <!-- Editorial Hero -->
+  <section class="cs-hero container">
+    <div class="reveal">
+      <div class="tags">
+        <span class="tag">Meal Preparation</span>
+        <span class="tag">SDGs 2&3</span>
+        <span class="tag">Figma</span>
+        <span class="tag">Design thinking</span>
+      </div>
+      <h1 class="cs-hero-title">CookMate: tech-driven innovation for <span>smarter eating</span></h1>
+      <p class="cs-paragraph" style="max-width: 700px; font-size: 20px;">
+        A meal prep and recipe recommendation application based on available ingredients, designed specifically for students and young professionals with limited budgets, time, and cooking equipment.
+      </p>
+    </div>
+
+    <!-- Floating Meta -->
+    <div class="cs-hero-meta reveal">
+      <div class="meta-group">
+        <h4>Role</h4>
+        <p>UI/UX Designer<span>(UX research + UI designer)</span></p>
+      </div>
+      <div class="meta-group">
+        <h4>Team</h4>
+        <p>Naya Kusuma · Maulana Daviq</p>
+      </div>
+      <div class="meta-group">
+        <h4>Duration</h4>
+        <p>4 weeks, Sept–Okt 2025</p>
+      </div>
+      <div class="meta-group">
+        <h4>Tools</h4>
+        <p>Figma, Google Forms, Zoom</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Layout Grid -->
+  <div class="cs-layout">
+    
+    <!-- Sidebar TOC -->
+    <aside class="cs-toc reveal">
+      <p class="cs-toc-title">Contents</p>
+      <ul class="cs-toc-list">
+        <li><a href="#problem" class="cs-toc-link">1. The Problem</a></li>
+        <li><a href="#personas" class="cs-toc-link">2. User Personas</a></li>
+        <li><a href="#process" class="cs-toc-link">3. Process</a></li>
+        <li><a href="#logic" class="cs-toc-link">4. Logic</a></li>
+        <li><a href="#output" class="cs-toc-link">5. The Output</a></li>
+        <li><a href="#reflection" class="cs-toc-link">6. Reflection</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="cs-content">
+
+      <!-- 1. The Problem -->
+      <section id="problem" class="cs-section reveal">
+        <span class="cs-subtitle">01 / The Problem</span>
+        <h2 class="cs-section-title">The challenge of cooking</h2>
+        <p class="cs-paragraph">
+          Generation Z, especially students living away from home and early-career workers, often struggle to maintain healthy eating habits. Based on secondary research (health articles and lifestyle surveys), the main challenges include limited budgets, busy schedules that leave little time for cooking, and difficulties in planning daily meals. As a result, they tend to rely on instant meals or fast food, which can negatively impact long-term health, including obesity and micronutrient deficiencies.
+        </p>
+
+        <div class="analysis-container">
+          <div class="analysis-box">
+            <h4>Problem Statement</h4>
+            <p>"How might we help students and young professionals plan and cook healthy meals that fit their limited budgets and busy schedules, while making the most of the ingredients they already have?"</p>
+          </div>
+          <div class="analysis-box">
+            <h4>Gap Analysis</h4>
+            <p>"Current recipe applications only provide recipes without considering the ingredients users already have, meaning they still need to shop for additional items. There is also a lack of features that integrate leftover ingredients in the fridge with budget-friendly meal prep planning."</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. User Personas -->
+      <section id="personas" class="cs-section reveal">
+        <span class="cs-subtitle">02 / Personas</span>
+        <h2 class="cs-section-title">Who are we designing for?</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+          <!-- Persona 1 (Green theme) -->
+          <div style="background: rgba(140,198,63,0.05); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 24px;">
+              <div style="display: flex; gap: 16px; align-items: center;">
+                <div style="width: 48px; height: 48px; background: rgba(140,198,63,0.2); color: #558B2F; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px;">DS</div>
+                <div>
+                  <h3 style="font-size: 20px; color: var(--text); margin-bottom: 2px;">David Simanjuntak, 24</h3>
+                  <p style="font-size: 14px; color: var(--text-light);">Junior marketing · Bandung · living alone in kost</p>
+                </div>
+              </div>
+              <span style="background: rgba(140,198,63,0.2); color: #558B2F; padding: 6px 12px; border-radius: 100px; font-size: 12px; font-weight: 700;">Employee</span>
+            </div>
+            <ul style="display: flex; flex-direction: column; gap: 16px; font-size: 15px; color: var(--text-light);">
+              <li style="display: flex; gap: 12px;"><span style="color: #E74C3C;">⚠</span> Often buys groceries without a plan, resulting in a lot of food waste. Frequently wonders, "What should I eat today?" after coming home late.</li>
+              <li style="display: flex; gap: 12px;"><span style="color: var(--brand-primary);">🎯</span> Wants to eat healthy and maintain regular meals without the hassle. Looking for a practical "digital kitchen assistant" to quickly cook meals using available ingredients.</li>
+              <li style="display: flex; gap: 12px;"><span style="color: #3498DB;">📱</span> Needs: weekly meal planning, recipe-by-ingredient search, automatic shopping lists, and cooking time under 30 minutes.</li>
+            </ul>
+          </div>
+          
+          <!-- Persona 2 (Orange theme) -->
+          <div style="background: rgba(227,176,74,0.05); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 24px;">
+              <div style="display: flex; gap: 16px; align-items: center;">
+                <div style="width: 48px; height: 48px; background: rgba(227,176,74,0.2); color: #B9770E; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px;">NR</div>
+                <div>
+                  <h3 style="font-size: 20px; color: var(--text); margin-bottom: 2px;">Nisa Rahmawati, 21</h3>
+                  <p style="font-size: 14px; color: var(--text-light);">6th-semester student · Bandung · living in a shared kost</p>
+                </div>
+              </div>
+              <span style="background: rgba(227,176,74,0.2); color: #B9770E; padding: 6px 12px; border-radius: 100px; font-size: 12px; font-weight: 700;">Student</span>
+            </div>
+            <ul style="display: flex; flex-direction: column; gap: 16px; font-size: 15px; color: var(--text-light);">
+              <li style="display: flex; gap: 12px;"><span style="color: #E74C3C;">⚠</span> Often runs out of money due to frequently buying fast food. Struggles to decide what to cook with limited cooking equipment and a budget of Rp50,000 for 3 days.</li>
+              <li style="display: flex; gap: 12px;"><span style="color: var(--brand-primary);">🎯</span> Wants to live independently and maintain a healthy lifestyle. Needs an application that helps save money without compromising nutrition and taste.</li>
+              <li style="display: flex; gap: 12px;"><span style="color: #3498DB;">📱</span> Needs: budget-based meal prep, estimated cost per meal, practical recipes using ingredients from nearby local stores, and ingredient inventory tracking for purchased items.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Process -->
+      <section id="process" class="cs-section reveal">
+        <span class="cs-subtitle">03 / Process</span>
+        <h2 class="cs-section-title">Design process</h2>
+
+        <div class="process-timeline">
+          <div class="process-step" data-step="1">
+            <h3>Empathize</h3>
+            <p>Interviews with target users (anak kos, pekerja muda, keluarga muda). Observation of daily shopping and meal-choosing behavior to understand actual patterns vs stated preferences.</p>
+          </div>
+          <div class="process-step" data-step="2">
+            <h3>Define</h3>
+            <p>Core problem statement: "Many individuals want to cook to live healthier and save money, but are blocked by time, budget, and difficulty finding recipes that match their needs and skill level."</p>
+          </div>
+          <div class="process-step" data-step="3">
+            <h3>Ideate</h3>
+            <p>Brainstorming + mind mapping by function: meal planning, ingredient management, budget tracking, nutrition. Prioritized: automated Meal Prep with integrated recipe recommendations and shopping list.</p>
+          </div>
+          <div class="process-step" data-step="4">
+            <h3>Prototype</h3>
+            <p>Wireframe for navigation structure and core flows (beranda, menu, belanja, profil). Then high-fidelity with documented design system: green brand palette, Inter font, outline icon set.</p>
+          </div>
+          <div class="process-step" data-step="5">
+            <h3>Test + iterate</h3>
+            <p>Usability testing with target users via scenario-based tasks: planning a weekly menu, matching recipes to available ingredients, adjusting for a tight budget.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Key Decisions -->
+      <section id="logic" class="cs-section reveal">
+        <span class="cs-subtitle">04 / Logic</span>
+        <h2 class="cs-section-title">Key design decisions</h2>
+        <p class="cs-paragraph">The "why" behind the screens.</p>
+
+        <div class="decisions-grid">
+          <div class="decision-card">
+            <h3>4-pillar bottom navigation</h3>
+            <p>Belanja gets its own nav tab, unusual for a cooking app. This reflects the insight that shopping list management is one of the most frequently-used parts of the cooking cycle, not a secondary feature tucked inside a recipe. Elevating it signals to users: "this app actually respects how you cook in real life."</p>
+          </div>
+          <div class="decision-card">
+            <h3>Dual entry to "Resep dari Bahan"</h3>
+            <p>Deliberately placed in two locations to serve two user types: David who spontaneously wants inspiration (enters from Beranda), and Nisa who has a clear planning goal (enters from Menu). Same feature, two valid starting points, no dead ends in the IA.</p>
+          </div>
+          <div class="decision-card">
+            <h3>Budget question before health goal question in Meal Prep flow</h3>
+            <p>Think about Nisa's scenario, what happens if you ask health goals first when someone just wants to eat within Rp 50k? This is a sequencing decision that shows empathy for the user's actual mental model.</p>
+          </div>
+          <div class="decision-card">
+            <h3>Cooking streak tracker</h3>
+            <p>The cooking streak tracker is the retention mechanism, not just a gamification add-on. From our research, the biggest dropout point for people trying to cook regularly is the gap between intention and habit. A visible streak makes the gap feel concrete and recoverable.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Final Design -->
+      <section id="output" class="cs-section reveal">
+        <span class="cs-subtitle">05 / The Output</span>
+        <h2 class="cs-section-title">Final design</h2>
+        
+        <img src="assets/cookmate_final.png" alt="CookMate Final UI Design" style="width: 100%; height: auto; display: block; border-radius: var(--radius-lg); margin-top: 32px; box-shadow: var(--shadow-sm);">
+      </section>
+
+      <!-- 6. Outcome -->
+      <section id="reflection" class="cs-section reveal">
+        <span class="cs-subtitle">06 / Reflection</span>
+        <h2 class="cs-section-title">Outcome + reflection</h2>
+
+        <div class="outcome-list">
+          <div class="outcome-item">
+            <h3>What the scenarios validated</h3>
+            <p>Both user journeys resolved their core pain points in under 5 minutes of interaction. David's food waste problem and menu paralysis are eliminated by recipe-from-ingredients. Nisa's budget stress is fully absorbed by the Meal Prep flow, one input, one output, done.</p>
+          </div>
+          <div class="outcome-item">
+            <h3>What I'd do differently</h3>
+            <p>I'd test the Meal Prep flow with actual numbers, giving users a specific budget like Rp 50.000 and asking them to complete the task, then measuring whether the generated menu felt trustworthy and satisfying. We validated the flow exists, but not whether users actually believed the output. Trust in AI-generated meal plans is a separate UX problem we assumed away.</p>
+          </div>
+          <div class="outcome-item">
+            <h3>What I learned</h3>
+            <p>This project taught me that information architecture is an empathy decision, not a structural one. Where you place a feature tells the user what you think they prioritize, putting Belanja in the main navigation is a statement that says 'we know you think about shopping as much as you think about cooking.' Every navigation decision is a hypothesis about the user's mental model.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+
+
+  <!-- Scripts -->
+  <script>
+    // Reveal Animations
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
+
+    reveals.forEach(reveal => revealObserver.observe(reveal));
+
+    // TOC Active State Syncing
+    const sections = document.querySelectorAll('.cs-section');
+    const navLinks = document.querySelectorAll('.cs-toc-link');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+    sections.forEach(sec => sectionObserver.observe(sec));
+
+    // Smooth Scroll for TOC
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

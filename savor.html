@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Savor Case Study — Naya Kusuma</title>
+  <meta name="description" content="Case study for Savor, a hyper-local food rescue ecosystem designed by Naya Kusuma." />
+  
+  <style>
+    /* 
+      =========================================
+      CORE VARIABLES & RESET
+      =========================================
+    */
+    :root {
+      --bg-color: #FAF9F6;
+      --bg-card: rgba(255, 255, 255, 0.7);
+      --bg-card-solid: #FFFFFF;
+      --text: #1D1D1F;
+      --text-light: #6E6E73;
+      --border: rgba(0, 0, 0, 0.08);
+      
+      /* Savor Brand Accents */
+      --brand-primary: #C0392B;
+      --brand-secondary: #E74C3C;
+      --brand-glow: rgba(231, 76, 60, 0.15);
+      
+      --radius-sm: 12px;
+      --radius: 20px;
+      --radius-lg: 32px;
+      --radius-xl: 48px;
+      
+      --shadow-sm: 0 4px 24px rgba(0,0,0,0.04);
+      --shadow: 0 16px 40px rgba(0,0,0,0.08);
+      --shadow-lg: 0 32px 64px rgba(192, 57, 43, 0.15);
+      
+      --max-w: 1100px; /* Reduced width */
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .ambient-glow::before, .ambient-glow::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: floatGlow 20s infinite alternate ease-in-out;
+    }
+    .ambient-glow::before {
+      width: 600px; height: 600px;
+      background: var(--brand-glow);
+      top: -100px; left: -200px;
+    }
+    .ambient-glow::after {
+      width: 500px; height: 500px;
+      background: rgba(255, 180, 0, 0.1);
+      bottom: 20%; right: -150px;
+      animation-delay: -10s;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 100px) scale(1.2); }
+    }
+
+    /* 
+      =========================================
+      TYPOGRAPHY
+      =========================================
+    */
+    .cs-subtitle { 
+      font-size: 13px; 
+      color: var(--brand-primary); 
+      font-weight: 700; 
+      letter-spacing: 0.1em; 
+      text-transform: uppercase; 
+      margin-bottom: 12px;
+      display: block;
+    }
+    .cs-section-title { 
+      font-size: clamp(28px, 4vw, 48px); 
+      font-weight: 800; 
+      letter-spacing: -0.03em; 
+      line-height: 1.1;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .cs-paragraph { 
+      font-size: 18px; 
+      color: var(--text-light); 
+      line-height: 1.6; 
+      max-width: 720px; 
+      margin-bottom: 32px;
+    }
+
+    /* 
+      =========================================
+      NAVIGATION
+      =========================================
+    */
+    .cs-nav {
+      position: fixed;
+      top: 24px;
+      left: 0; right: 0;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .cs-nav .container { display: flex; justify-content: flex-start; }
+    .btn-back {
+      pointer-events: auto;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-weight: 600; font-size: 14px; color: var(--text);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      transition: var(--transition);
+    }
+    .btn-back:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* 
+      =========================================
+      EDITORIAL HERO SECTION
+      =========================================
+    */
+    .cs-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 0 60px;
+      position: relative;
+    }
+    .cs-hero-title {
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 24px;
+      color: var(--text);
+      z-index: 2;
+      position: relative;
+    }
+    .cs-hero-title span { color: var(--brand-primary); }
+    
+    .tags {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .tag {
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      font-size: 13px; font-weight: 600; color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Floating Meta Box */
+    .cs-hero-meta {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 24px;
+      box-shadow: var(--shadow);
+      margin-top: 40px;
+    }
+    .meta-group h4 { font-size: 12px; text-transform: uppercase; color: var(--text-light); margin-bottom: 6px; letter-spacing: 0.05em; font-weight: 700; }
+    .meta-group p { font-size: 15px; font-weight: 600; color: var(--text); }
+    .meta-group p span { font-weight: 400; color: var(--text-light); font-size: 13px; display: block; margin-top: 2px; }
+
+    /* 
+      =========================================
+      LAYOUT: TOC + CONTENT
+      =========================================
+    */
+    .cs-layout {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 60px 32px 120px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 64px;
+    }
+    .cs-section { margin-bottom: 120px; scroll-margin-top: 100px; position: relative; }
+
+    /* Table of Contents (Sidebar) */
+    .cs-toc {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+    .cs-toc-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+    .cs-toc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-left: 2px solid var(--border);
+      padding-left: 16px;
+    }
+    .cs-toc-link {
+      font-size: 14px;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    .cs-toc-link:hover { color: var(--text); }
+    .cs-toc-link.active {
+      color: var(--brand-primary);
+      font-weight: 700;
+    }
+    .cs-toc-link.active::before {
+      content: '';
+      position: absolute;
+      left: -19px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 16px;
+      background: var(--brand-primary);
+      border-radius: 4px;
+    }
+
+    /* The Problem (Magazine Pull-Quotes) */
+    .pull-quotes-container { display: flex; flex-direction: column; gap: 32px; }
+    .pull-quote {
+      position: relative;
+      padding: 48px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: var(--shadow-sm);
+    }
+    .pull-quote::before {
+      content: '“';
+      position: absolute;
+      top: -20px; left: 24px;
+      font-size: 120px;
+      font-family: serif;
+      line-height: 1;
+      color: var(--brand-glow);
+      z-index: -1;
+    }
+    .pull-quote p.quote-text {
+      font-size: clamp(20px, 2.5vw, 24px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .pull-quote p.quote-author {
+      font-size: 14px; font-weight: 700; color: var(--brand-primary); text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    /* Research Findings (Bento Box) */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: minmax(160px, auto);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .bento-item {
+      background: var(--bg-card-solid);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex; flex-direction: column; justify-content: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .bento-item:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    
+    /* Bento CSS order fixed for specificity */
+    .bento-item h3 { font-size: 40px; line-height: 1; margin-bottom: 12px; color: var(--text); letter-spacing: -0.04em; }
+    .bento-item p { font-size: 15px; color: var(--text-light); font-weight: 500; line-height: 1.5; }
+
+    /* The Large red box overrides the item styles */
+    .bento-large { grid-column: span 2; grid-row: span 2; background: var(--brand-primary); color: white; border: none; }
+    .bento-large h3 { font-size: clamp(64px, 7vw, 100px); color: white; margin-bottom: 24px; }
+    .bento-large p { font-size: 18px; color: rgba(255,255,255,0.9); }
+    
+    .bento-wide { grid-column: span 2; }
+
+    /* Design Process (Editorial Timeline) */
+    .process-timeline {
+      margin-top: 48px;
+      position: relative;
+    }
+    .process-timeline::before {
+      content: ''; position: absolute; left: 40px; top: 0; bottom: 0; width: 2px; background: var(--border);
+    }
+    .process-step {
+      position: relative;
+      padding-left: 100px;
+      margin-bottom: 56px;
+    }
+    .process-step::before {
+      content: attr(data-step);
+      position: absolute;
+      left: 20px; top: 0;
+      width: 40px; height: 40px;
+      background: var(--bg-card-solid);
+      border: 2px solid var(--brand-primary);
+      color: var(--brand-primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800;
+      z-index: 2;
+    }
+    /* Ghost number background */
+    .process-step::after {
+      content: attr(data-step);
+      position: absolute;
+      left: 100px; top: -30px;
+      font-size: 100px; font-weight: 900;
+      color: var(--border);
+      opacity: 0.4; z-index: -1;
+      line-height: 1;
+    }
+    .process-step h3 { font-size: 24px; margin-bottom: 8px; color: var(--text); }
+    .process-step p { font-size: 16px; color: var(--text-light); line-height: 1.6; max-width: 600px; }
+
+    /* Key Decisions (Overlapping Cards) */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .decision-card {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .decision-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--text); line-height: 1.3; }
+    .decision-card p { font-size: 15px; color: var(--text-light); line-height: 1.6; }
+
+    /* Image Placeholders */
+    .ui-placeholder {
+      width: 100%; height: 500px;
+      background: var(--bg-card);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-xl);
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      margin-top: 32px;
+      color: var(--text-light);
+    }
+
+    /* Outcome Reflection - Redesigned to be clean list */
+    .outcome-list { display: flex; flex-direction: column; margin-top: 40px; }
+    .outcome-item {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+    }
+    .outcome-item:last-child { border-bottom: 1px solid var(--border); }
+    .outcome-item h3 { font-size: 20px; color: var(--text); margin: 0; }
+    .outcome-item p { margin: 0; font-size: 16px; color: var(--text-light); line-height: 1.6; }
+
+    /* Next Project Footer */
+    .cs-footer {
+      padding: 80px 0 120px;
+      text-align: center;
+      position: relative;
+    }
+    .cs-footer::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 160px; height: 2px; background: var(--border);
+    }
+    .next-project-link {
+      display: inline-block;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.04em;
+      transition: var(--transition);
+      margin-top: 16px;
+    }
+    .next-project-link:hover { color: #27AE60; transform: translateY(-8px); }
+
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .cs-layout { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px 80px; }
+      .cs-toc { display: none; }
+      .cs-hero { padding: 100px 0 20px; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-large, .bento-wide { grid-column: span 1; }
+      .pull-quote { padding: 32px; }
+      .process-timeline::before { left: 24px; }
+      .process-step { padding-left: 64px; }
+      .process-step::before { left: 4px; }
+      .process-step::after { display: none; }
+      .outcome-item { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+
+  <!-- Navigation -->
+  <nav class="cs-nav">
+    <div class="container">
+      <a href="index.html" class="btn-back">
+        <span aria-hidden="true">←</span> Back
+      </a>
+    </div>
+  </nav>
+
+  <!-- Editorial Hero -->
+  <section class="cs-hero container">
+    <div class="reveal">
+      <div class="tags">
+        <span class="tag">Food tech</span>
+        <span class="tag">Sustainability</span>
+        <span class="tag">Mobile app</span>
+        <span class="tag">Figma</span>
+        <span class="tag">Design thinking</span>
+      </div>
+      <h1 class="cs-hero-title">Savor: hyper-local <br><span>food rescue</span> ecosystem.</h1>
+      <p class="cs-paragraph" style="max-width: 700px; font-size: 20px;">
+        A B2C + C2C marketplace connecting campus food merchants with students rescuing surplus food before it hits the bin, at 50 – 70% off.
+      </p>
+    </div>
+
+    <!-- Floating Meta -->
+    <div class="cs-hero-meta reveal">
+      <div class="meta-group">
+        <h4>Role</h4>
+        <p>UI/UX Designer<span>UX research + UI design</span></p>
+      </div>
+      <div class="meta-group">
+        <h4>Team</h4>
+        <p>Naya Kusuma <br> Maulana Daviq</p>
+      </div>
+      <div class="meta-group">
+        <h4>Duration</h4>
+        <p>4 weeks <br><span>Mar–Apr 2026</span></p>
+      </div>
+      <div class="meta-group">
+        <h4>Tools</h4>
+        <p>Figma, Jotform, Zoom</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Layout Grid -->
+  <div class="cs-layout">
+    
+    <!-- Sidebar TOC -->
+    <aside class="cs-toc reveal">
+      <p class="cs-toc-title">Contents</p>
+      <ul class="cs-toc-list">
+        <li><a href="#problem" class="cs-toc-link">1. The Problem</a></li>
+        <li><a href="#research" class="cs-toc-link">2. Research</a></li>
+        <li><a href="#process" class="cs-toc-link">3. Process</a></li>
+        <li><a href="#logic" class="cs-toc-link">4. Logic</a></li>
+        <li><a href="#output" class="cs-toc-link">5. The Output</a></li>
+        <li><a href="#reflection" class="cs-toc-link">6. Reflection</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="cs-content">
+
+      <!-- 1. The Problem -->
+      <section id="problem" class="cs-section reveal">
+        <span class="cs-subtitle">01 / The Problem</span>
+        <h2 class="cs-section-title">The tragic irony of campus food</h2>
+        <p class="cs-paragraph">
+          Despite Indonesia discarding up to 48 million tons of food annually, contributing massively to methane emissions, students on campus are routinely skipping meals due to tight budgets. The tragic irony lies in campus canteens throwing away perfectly good unsold food at 5 PM while hungry students study just buildings away.
+        </p>
+
+        <div class="pull-quotes-container">
+          <div class="pull-quote">
+            <p class="quote-text">"Gue sering sih nahan lapar sore karena udah mau abis uang jajannya, padahal tau sendiri kantin masih banyak sisa makanan yang akhirnya dibuang."</p>
+            <p class="quote-author">Student respondent</p>
+          </div>
+          <div class="pull-quote">
+            <p class="quote-text">"Gue pernah jadi panitia seminar fakultas, sisa 30 kotak snack dan akhirnya kita buang semua karena nggak tau mau dikasih ke siapa."</p>
+            <p class="quote-author">Campus event organizer</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Research Findings -->
+      <section id="research" class="cs-section reveal">
+        <span class="cs-subtitle">02 / Research</span>
+        <h2 class="cs-section-title">Validating the assumption</h2>
+        <p class="cs-paragraph" style="font-weight: 500;">Based on 65 respondents: 35 users (students + general public) and 30 merchants (canteens, cafes, warungs).</p>
+
+        <div class="bento-grid">
+          <div class="bento-item bento-large">
+            <h3>98%</h3>
+            <p>of students have skipped or reduced meals due to budget constraints.</p>
+          </div>
+          <div class="bento-item bento-wide">
+            <h3>77%</h3>
+            <p>willing to buy quality surplus food at 50–70% discount.</p>
+          </div>
+          <div class="bento-item">
+            <h3>90%</h3>
+            <p>of merchants gave maximum interest (5/5) in joining.</p>
+          </div>
+          <div class="bento-item">
+            <h3>83%</h3>
+            <p>of merchants said leftover food is just thrown away.</p>
+          </div>
+          <div class="bento-item bento-wide">
+            <h3 style="font-size: 32px; margin-bottom: 8px;">51%</h3>
+            <p>of students are most hungry at 4–5 PM, identical to merchant closing time.</p>
+          </div>
+          <div class="bento-item bento-wide">
+            <h3 style="font-size: 32px; margin-bottom: 8px;">43%</h3>
+            <p>of merchants have never calculated monthly financial loss from food waste.</p>
+          </div>
+        </div>
+        
+        <div class="pull-quotes-container" style="margin-top: 48px;">
+          <div class="pull-quote">
+            <p class="quote-text">"Saya tertarik sekali. Yang penting prosesnya gampang, jangan sampai saya harus input banyak-banyak. Saya kan sibuk masak, nggak bisa pegang HP terus."</p>
+            <p class="quote-author">Canteen owner, field interview</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Process -->
+      <section id="process" class="cs-section reveal">
+        <span class="cs-subtitle">03 / Process</span>
+        <h2 class="cs-section-title">How we got there</h2>
+
+        <div class="process-timeline">
+          <div class="process-step" data-step="1">
+            <h3>Empathize</h3>
+            <p>3-day field observation at campus canteens (2–5 PM). Semi-structured interviews with 10 students + 10 merchants. 65-respondent online survey.</p>
+          </div>
+          <div class="process-step" data-step="2">
+            <h3>Define</h3>
+            <p>How might we help merchants distribute surplus food in under 5 minutes of input? And how might we make budget-conscious students feel they're getting real value, not just 'buying leftovers'?</p>
+          </div>
+          <div class="process-step" data-step="3">
+            <h3>Ideate</h3>
+            <p>Crazy 8s → 24 rough concepts → dot voting → 3 core features prioritized: Savor Box, Savor Circles, Savor Points.</p>
+          </div>
+          <div class="process-step" data-step="4">
+            <h3>Prototype</h3>
+            <p>Lo-fi wireframes to validate IA (max 4 taps to complete a Savor Box transaction). Then full high-fidelity with documented design system.</p>
+          </div>
+          <div class="process-step" data-step="5">
+            <h3>Test + iterate</h3>
+            <p>Think-aloud usability testing with 5 users (3 students, 2 merchants). Severity rating 1–4 per issue. 3 critical fixes shipped in next sprint.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Key Decisions -->
+      <section id="logic" class="cs-section reveal">
+        <span class="cs-subtitle">04 / Logic</span>
+        <h2 class="cs-section-title">Key design decisions</h2>
+        <p class="cs-paragraph">The "why" behind the screens.</p>
+
+        <div class="decisions-grid">
+          <div class="decision-card">
+            <h3>Merchant input: 6 steps → 3 steps</h3>
+            <p>Usability testing showed merchants struggled with the original flow. Ibu kantin's feedback ("I can't hold the phone the whole time") drove us to consolidate listing into 3 steps with auto-weight estimation.</p>
+          </div>
+          <div class="decision-card">
+            <h3>Walking-distance pickup as default</h3>
+            <p>Delivery-first would contradict the CO₂ reduction mission. Walking pickup matches campus food culture. Delivery is available but never the default suggestion.</p>
+          </div>
+          <div class="decision-card">
+            <h3>CO₂eq framed as "plates of food"</h3>
+            <p>Abstract CO₂ numbers felt disconnected. Adding a relatable food equivalent ("X plates of nasi goreng") increased perceived value of the Impact Dashboard and motivated repeat use.</p>
+          </div>
+          <div class="decision-card">
+            <h3>Savor Points expire in 30 days</h3>
+            <p>Creates a sense of urgency and a 'use it or lose it' mentality, driving higher monthly active usage. Without expiry, the gamification loop loses its impact.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Final Design -->
+      <section id="output" class="cs-section reveal">
+        <span class="cs-subtitle">05 / The Output</span>
+        <h2 class="cs-section-title">Final polished UI</h2>
+        
+        <img src="assets/savor_final.png" alt="Savor Final UI Design" style="width: 100%; height: auto; display: block; border-radius: var(--radius-lg); margin-top: 32px; box-shadow: var(--shadow-sm);">
+      </section>
+
+      <!-- 6. Outcome -->
+      <section id="reflection" class="cs-section reveal">
+        <span class="cs-subtitle">06 / Reflection</span>
+        <h2 class="cs-section-title">Outcome & lessons learned</h2>
+
+        <div class="outcome-list">
+          <div class="outcome-item">
+            <h3>What changed</h3>
+            <p>3 critical UX issues resolved: confusing Savor Box concept (fixed with tooltip), complex merchant input (reduced to 3 steps), abstract CO₂ numbers (added food equivalent). The revised flow was validated by re-testing with the same participants, who completed the Savor Box transaction without prompting on their second attempt.</p>
+          </div>
+          <div class="outcome-item">
+            <h3>What I'd do differently</h3>
+            <p>I'd run a dedicated usability test for Savor Circles (the C2C feature) with actual event organizers and student committees, it was designed based on survey data alone and never tested as a standalone flow. I'd also push for a live pilot with even one merchant before finalizing the merchant dashboard.</p>
+          </div>
+          <div class="outcome-item">
+            <h3>What I learned</h3>
+            <p>Designing for two completely different user types in the same product taught me that simplicity isn't a style choice, for ibu kantin who's actively cooking and can't look at her phone for more than 10 seconds, it's a hard functional requirement. Features that felt essential from a product perspective had to be cut or hidden.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="cs-footer reveal">
+    <div class="container">
+      <span class="cs-subtitle" style="text-align: center;">Next Case Study</span>
+      <a href="index.html#project-ecosync" class="next-project-link">EcoSync B2B Marketplace →</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Reveal Animations
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
+
+    reveals.forEach(reveal => revealObserver.observe(reveal));
+
+    // TOC Active State Syncing
+    const sections = document.querySelectorAll('.cs-section');
+    const navLinks = document.querySelectorAll('.cs-toc-link');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+    sections.forEach(sec => sectionObserver.observe(sec));
+
+    // Smooth Scroll for TOC
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
