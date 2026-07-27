@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SVARA Case Study — Naya Kusuma</title>
+  <meta name="description" content="Case study for SVARA, inclusive communication & health for Deaf Friend and Speech Friend." />
+  
+  <style>
+    /* 
+      =========================================
+      CORE VARIABLES & RESET
+      =========================================
+    */
+    :root {
+      --bg-color: #FAF9F6;
+      --bg-card: rgba(255, 255, 255, 0.7);
+      --bg-card-solid: #FFFFFF;
+      --text: #161A33;
+      --text-light: #5B5C74;
+      --border: rgba(0, 0, 0, 0.08);
+      
+      /* Svara Brand Accents */
+      --brand-primary: #1FB6A6;
+      --brand-primary-deep: #0E8377;
+      --brand-secondary: #4C5FEA;
+      --brand-secondary-deep: #2F3BB8;
+      --brand-glow: rgba(31, 182, 166, 0.15);
+      
+      --radius-sm: 12px;
+      --radius: 20px;
+      --radius-lg: 32px;
+      --radius-xl: 48px;
+      
+      --shadow-sm: 0 4px 24px rgba(0,0,0,0.04);
+      --shadow: 0 16px 40px rgba(0,0,0,0.08);
+      --shadow-lg: 0 32px 64px rgba(31, 182, 166, 0.15);
+      
+      --max-w: 1100px;
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .ambient-glow::before, .ambient-glow::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: floatGlow 20s infinite alternate ease-in-out;
+    }
+    .ambient-glow::before {
+      width: 600px; height: 600px;
+      background: var(--brand-glow);
+      top: -100px; left: -200px;
+    }
+    .ambient-glow::after {
+      width: 500px; height: 500px;
+      background: rgba(76, 95, 234, 0.1); /* Blue glow */
+      bottom: 20%; right: -150px;
+      animation-delay: -10s;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 100px) scale(1.2); }
+    }
+
+    /* 
+      =========================================
+      TYPOGRAPHY
+      =========================================
+    */
+    .cs-subtitle { 
+      font-size: 13px; 
+      color: var(--brand-primary-deep); 
+      font-weight: 700; 
+      letter-spacing: 0.1em; 
+      text-transform: uppercase; 
+      margin-bottom: 12px;
+      display: block;
+    }
+    .cs-section-title { 
+      font-size: clamp(28px, 4vw, 48px); 
+      font-weight: 800; 
+      letter-spacing: -0.03em; 
+      line-height: 1.1;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .cs-paragraph { 
+      font-size: 18px; 
+      color: var(--text-light); 
+      line-height: 1.6; 
+      max-width: 720px; 
+      margin-bottom: 32px;
+    }
+
+    /* 
+      =========================================
+      NAVIGATION
+      =========================================
+    */
+    .cs-nav {
+      position: fixed;
+      top: 24px;
+      left: 0; right: 0;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .cs-nav .container { display: flex; justify-content: flex-start; }
+    .btn-back {
+      pointer-events: auto;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-weight: 600; font-size: 14px; color: var(--text);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      transition: var(--transition);
+    }
+    .btn-back:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* 
+      =========================================
+      EDITORIAL HERO SECTION
+      =========================================
+    */
+    .cs-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 0 60px;
+      position: relative;
+    }
+    .cs-hero-title {
+      font-size: clamp(40px, 5vw, 68px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      color: var(--text);
+      z-index: 2;
+      position: relative;
+      max-width: 900px;
+    }
+    .cs-hero-title span { background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary)); -webkit-background-clip: text; color: transparent; }
+    
+    .tags {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .tag {
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      font-size: 13px; font-weight: 600; color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Floating Meta Box */
+    .cs-hero-meta {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 24px;
+      box-shadow: var(--shadow);
+      margin-top: 40px;
+    }
+    .meta-group h4 { font-size: 12px; text-transform: uppercase; color: var(--text-light); margin-bottom: 6px; letter-spacing: 0.05em; font-weight: 700; }
+    .meta-group p { font-size: 15px; font-weight: 600; color: var(--text); }
+    .meta-group p span { font-weight: 400; color: var(--text-light); font-size: 13px; display: block; margin-top: 2px; }
+
+    /* 
+      =========================================
+      LAYOUT: TOC + CONTENT
+      =========================================
+    */
+    .cs-layout {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 60px 32px 120px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 64px;
+    }
+    .cs-section { margin-bottom: 120px; scroll-margin-top: 100px; position: relative; }
+
+    /* Table of Contents (Sidebar) */
+    .cs-toc {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+    .cs-toc-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+    .cs-toc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-left: 2px solid var(--border);
+      padding-left: 16px;
+    }
+    .cs-toc-link {
+      font-size: 14px;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    .cs-toc-link:hover { color: var(--text); }
+    .cs-toc-link.active {
+      color: var(--brand-primary);
+      font-weight: 700;
+    }
+    .cs-toc-link.active::before {
+      content: '';
+      position: absolute;
+      left: -19px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 16px;
+      background: var(--brand-primary);
+      border-radius: 4px;
+    }
+
+    /* Pull-Quotes */
+    .pull-quotes-container { display: flex; flex-direction: column; gap: 32px; }
+    .pull-quote {
+      position: relative;
+      padding: 48px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: var(--shadow-sm);
+    }
+    .pull-quote::before {
+      content: '“';
+      position: absolute;
+      top: -20px; left: 24px;
+      font-size: 120px;
+      font-family: serif;
+      line-height: 1;
+      color: var(--brand-glow);
+      z-index: -1;
+    }
+    .pull-quote p.quote-text {
+      font-size: clamp(20px, 2.5vw, 24px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .pull-quote p.quote-author {
+      font-size: 14px; font-weight: 700; color: var(--brand-primary-deep); text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    /* Bento Box */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: minmax(160px, auto);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .bento-item {
+      background: var(--bg-card-solid);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex; flex-direction: column; justify-content: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .bento-item:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    
+    .bento-item h3 { font-size: 40px; line-height: 1; margin-bottom: 12px; color: var(--text); letter-spacing: -0.04em; }
+    .bento-item p { font-size: 15px; color: var(--text-light); font-weight: 500; line-height: 1.5; }
+
+    .bento-large { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)); color: white; border: none; }
+    .bento-large h3 { font-size: clamp(64px, 7vw, 100px); color: white; margin-bottom: 24px; }
+    .bento-large p { font-size: 18px; color: rgba(255,255,255,0.9); }
+    
+    .bento-wide { grid-column: span 2; }
+    .bento-gradient-text h3 { background: linear-gradient(90deg, var(--brand-primary-deep), var(--brand-secondary-deep)); -webkit-background-clip: text; color: transparent; }
+
+    /* Editorial Timeline */
+    .process-timeline {
+      margin-top: 48px;
+      position: relative;
+    }
+    .process-timeline::before {
+      content: ''; position: absolute; left: 40px; top: 0; bottom: 0; width: 2px; background: var(--border);
+    }
+    .process-step {
+      position: relative;
+      padding-left: 100px;
+      margin-bottom: 56px;
+    }
+    .process-step::before {
+      content: attr(data-step);
+      position: absolute;
+      left: 20px; top: 0;
+      width: 40px; height: 40px;
+      background: var(--bg-card-solid);
+      border: 2px solid var(--brand-primary);
+      color: var(--brand-primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800;
+      z-index: 2;
+    }
+    .process-step::after {
+      content: attr(data-step);
+      position: absolute;
+      left: 100px; top: -30px;
+      font-size: 100px; font-weight: 900;
+      color: var(--border);
+      opacity: 0.4; z-index: -1;
+      line-height: 1;
+    }
+    .process-step h3 { font-size: 24px; margin-bottom: 8px; color: var(--text); }
+    .process-step p { font-size: 16px; color: var(--text-light); line-height: 1.6; max-width: 600px; }
+
+    /* Key Decisions Grid */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .decision-card {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .decision-card.tuli { background: rgba(31, 182, 166, 0.05); border-color: rgba(31, 182, 166, 0.2); }
+    .decision-card.bicara { background: rgba(76, 95, 234, 0.05); border-color: rgba(76, 95, 234, 0.2); }
+    .decision-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--text); line-height: 1.3; }
+    .decision-card p { font-size: 15px; color: var(--text-light); line-height: 1.6; }
+
+    /* Scenarios Grid */
+    .scenario-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .scenario-card {
+      display: grid; grid-template-columns: 200px 1fr; gap: 32px;
+      background: var(--bg-card-solid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .scenario-meta h4 { font-size: 12px; font-weight: 800; color: var(--brand-primary-deep); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;}
+    .scenario-meta p { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 16px;}
+    .scenario-content h3 { font-size: 24px; margin-bottom: 12px; color: var(--text); }
+    .scenario-content p { font-size: 16px; color: var(--text-light); line-height: 1.6; margin-bottom: 24px; }
+    .feat-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .feat-pill { font-size: 12px; background: rgba(76, 95, 234, 0.1); color: var(--brand-secondary-deep); padding: 6px 16px; border-radius: 100px; font-weight: 700; }
+    
+    .proto-link {
+      display: inline-flex; align-items: center; gap: 10px; margin-top: 48px;
+      background: var(--text); color: #fff; padding: 16px 32px; border-radius: 100px;
+      font-size: 16px; font-weight: 700; text-decoration: none; transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+    .proto-link:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); background: var(--brand-secondary-deep); }
+
+    /* Outcome Reflection */
+    .outcome-list { display: flex; flex-direction: column; margin-top: 40px; }
+    .outcome-item {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 32px;
+    }
+    .outcome-item:last-child { border-bottom: 1px solid var(--border); }
+    .outcome-item h3 { font-size: 20px; color: var(--text); margin: 0; }
+    .outcome-item p { margin: 0; font-size: 16px; color: var(--text-light); line-height: 1.6; }
+
+    /* Next Project Footer */
+    .cs-footer {
+      padding: 80px 0 120px;
+      text-align: center;
+      position: relative;
+    }
+    .cs-footer::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 160px; height: 2px; background: var(--border);
+    }
+    .next-project-link {
+      display: inline-block;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.04em;
+      transition: var(--transition);
+      margin-top: 16px;
+    }
+    .next-project-link:hover { color: var(--brand-primary); transform: translateY(-8px); }
+
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .cs-layout { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px 80px; }
+      .cs-toc { display: none; }
+      .cs-hero { padding: 100px 0 20px; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-large, .bento-wide { grid-column: span 1; }
+      .pull-quote { padding: 32px; }
+      .process-timeline::before { left: 24px; }
+      .process-step { padding-left: 64px; }
+      .process-step::before { left: 4px; }
+      .process-step::after { display: none; }
+      .scenario-card { grid-template-columns: 1fr; gap: 16px; padding: 24px; }
+      .outcome-item { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+
+  <!-- Navigation -->
+  <nav class="cs-nav">
+    <div class="container">
+      <a href="index.html" class="btn-back">
+        <span aria-hidden="true">←</span> Back
+      </a>
+    </div>
+  </nav>
+
+  <!-- Editorial Hero -->
+  <section class="cs-hero container">
+    <div class="reveal">
+      <div class="tags">
+        <span class="tag">Accessibility</span>
+        <span class="tag">HealthTech</span>
+        <span class="tag">Mobile app</span>
+        <span class="tag">Figma</span>
+        <span class="tag">Inclusive Design</span>
+      </div>
+      <h1 class="cs-hero-title">SVARA: inclusive communication &amp; health for <br><span>Deaf Friend and Speech Friend</span></h1>
+      <p class="cs-paragraph" style="max-width: 700px; font-size: 20px;">
+        One app with a Context-Aware UI that adapts from onboarding — not two systems split apart — bringing daily communication and telehealth together for Indonesia's 22.97 million people with disabilities.
+      </p>
+    </div>
+
+    <!-- Floating Meta -->
+    <div class="cs-hero-meta reveal">
+      <div class="meta-group">
+        <h4>Role</h4>
+        <p>UI/UX Designer<span>(research + UI)</span></p>
+      </div>
+      <div class="meta-group">
+        <h4>Team</h4>
+        <p>kicau mania<span>Naila, Eva, Naya</span></p>
+      </div>
+      <div class="meta-group">
+        <h4>Context</h4>
+        <p>UI/UX competition<span>Universitas Indonesia</span></p>
+      </div>
+      <div class="meta-group">
+        <h4>Tools</h4>
+        <p>Figma, Google Forms</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Layout Grid -->
+  <div class="cs-layout">
+    
+    <!-- Sidebar TOC -->
+    <aside class="cs-toc reveal">
+      <p class="cs-toc-title">Contents</p>
+      <ul class="cs-toc-list">
+        <li><a href="#problem" class="cs-toc-link">1. The Problem</a></li>
+        <li><a href="#research" class="cs-toc-link">2. Research Findings</a></li>
+        <li><a href="#process" class="cs-toc-link">3. Design Process</a></li>
+        <li><a href="#decisions" class="cs-toc-link">4. Key Decisions</a></li>
+        <li><a href="#scenarios" class="cs-toc-link">5. Scenarios</a></li>
+        <li><a href="#outcome" class="cs-toc-link">6. Outcome &amp; Reflection</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="cs-content">
+
+      <!-- 1. The Problem -->
+      <section id="problem" class="cs-section reveal">
+        <span class="cs-subtitle">01 / The Problem</span>
+        <h2 class="cs-section-title">Bridging the communication gap</h2>
+        <p class="cs-paragraph">
+          Indonesia has more than 22.97 million people with disabilities, with the deaf/speech-impaired community as one of the largest groups — yet certified sign language interpreters remain scarce. That gap forces Deaf Friend and Speech Friend to depend on a companion for public interactions and for private, sensitive moments like a doctor's visit.
+        </p>
+        <p class="cs-paragraph">
+          Existing solutions treat this as one problem, offering the same generic interface to someone who relies entirely on visual cues (Deaf Friend) and someone who can hear but struggles to speak (Speech Friend) — even though their communication needs are fundamentally different.
+        </p>
+
+        <div class="pull-quotes-container" style="margin-top: 40px;">
+          <div class="pull-quote">
+            <p class="quote-text">"When a Deaf patient comes in alone and in pain, we struggle to ask about drug allergies or how the injury happened."</p>
+            <p class="quote-author">Adrian, medical staff respondent</p>
+          </div>
+          <div class="pull-quote">
+            <p class="quote-text">"Almost two-thirds of Deaf telehealth users still hit communication barriers, even on a virtual care platform."</p>
+            <p class="quote-author">Mussallem et al., 2022</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Research Findings -->
+      <section id="research" class="cs-section reveal">
+        <span class="cs-subtitle">02 / Research Findings</span>
+        <h2 class="cs-section-title">Validating the barriers</h2>
+        <p class="cs-paragraph" style="font-weight: 500; font-size: 16px; color: var(--brand-primary-deep);">n = 36 (Deaf Friend/Speech Friend, general public, medical staff). Biggest reported barrier to talking with hearing people: not knowing sign language and fear of being misunderstood (68.2% each).</p>
+
+        <div class="bento-grid">
+          <div class="bento-item bento-large">
+            <h3>92.8%</h3>
+            <p>of Deaf Friend/Speech Friend respondents report frequent difficulty or misunderstanding in public.</p>
+          </div>
+          <div class="bento-item bento-wide bento-gradient-text">
+            <h3>64.3%</h3>
+            <p>go to the doctor alone rather than with a companion, emphasizing the need for independent communication.</p>
+          </div>
+          <div class="bento-item bento-gradient-text">
+            <h3>100%</h3>
+            <p>of medical staff say language barriers risk delayed/wrong treatment.</p>
+          </div>
+          <div class="bento-item bento-gradient-text">
+            <h3>86.1%</h3>
+            <p>interested in a multi-voice, color-coded live caption feature.</p>
+          </div>
+          <div class="bento-item bento-gradient-text">
+            <h3>72.2%</h3>
+            <p>say a 3D body map to mark pain would help more than typing.</p>
+          </div>
+          <div class="bento-item bento-gradient-text">
+            <h3>86.1%</h3>
+            <p>would use a manual drawing/typing fallback if AI camera fails.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Design Process -->
+      <section id="process" class="cs-section reveal">
+        <span class="cs-subtitle">03 / Process</span>
+        <h2 class="cs-section-title">How we got there</h2>
+        
+        <div class="process-timeline">
+          <div class="process-step" data-step="1">
+            <h3>Empathize</h3>
+            <p>Online survey, "Communication &amp; Healthcare Accessibility," across three groups — Deaf Friend/Speech Friend, the general public, and medical staff — mapping public-space communication and clinic-visit experiences.</p>
+          </div>
+          <div class="process-step" data-step="2">
+            <h3>Define</h3>
+            <p>Two HMWs from the data: how to help a patient describe pain location and severity without typing while in distress, and how to keep communication working when the AI misses a gesture in poor light or a weak signal.</p>
+          </div>
+          <div class="process-step" data-step="3">
+            <h3>Ideate</h3>
+            <p>Crazy 8s → dot voting → feasibility review. Landed on one adaptive Context-Aware UI instead of two separate apps, plus three safety layers: Smart Keyboard, Medical Predictive Text, and the Papan Interaktif fallback.</p>
+          </div>
+          <div class="process-step" data-step="4">
+            <h3>Prototype</h3>
+            <p>Low-fidelity wireframes first, to validate the Dynamic Onboarding flow that lets someone set their sensory profile in a few clear steps — then a documented high-fidelity system (palette, type, reusable components).</p>
+          </div>
+          <div class="process-step" data-step="5">
+            <h3>Test &amp; iterate</h3>
+            <p>Think-aloud usability testing with Deaf Friend, Speech Friend, and medical staff, severity-rated per issue, fed back into the prototype stage.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Key Design Decisions -->
+      <section id="decisions" class="cs-section reveal">
+        <span class="cs-subtitle">04 / Key Decisions</span>
+        <h2 class="cs-section-title">Shaping the experience</h2>
+        
+        <div class="decisions-grid">
+          <div class="decision-card tuli">
+            <h3>One adaptive app, not two</h3>
+            <p>Splitting into a "Deaf app" and a "Speech app" would isolate the two groups from each other and from hearing peers. Instead, Dynamic Onboarding sets a sensory profile once, and the interface — captions on or off, camera-first or voice-first — adapts from there.</p>
+          </div>
+          <div class="decision-card bicara">
+            <h3>3D Symptom Mapping over typing</h3>
+            <p>64.3% go to the doctor alone, and typing a detailed complaint while in pain is exactly the friction that pushes people back toward bringing a companion. Marking pain on a 3D avatar plus a severity scale replaces that typing.</p>
+          </div>
+          <div class="decision-card tuli">
+            <h3>Fallback is not optional, it's core</h3>
+            <p>92.8% hit communication trouble in non-ideal conditions — crowded rooms, bad lighting. The Papan Interaktif (manual draw/type canvas) and Frasa Cepat aren't an edge case UI, they're a permanent, always-reachable layer for when computer vision fails.</p>
+          </div>
+          <div class="decision-card bicara">
+            <h3>A confirmation step before medical terms ship</h3>
+            <p>Because 100% of medical staff linked language barriers to delayed or wrong treatment, Medical AI Fail-safe shows a pop-up to confirm what the AI captured before it reaches the doctor — cutting the highest-risk failure mode out of the flow.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Usage Scenarios -->
+      <section id="scenarios" class="cs-section reveal">
+        <span class="cs-subtitle">05 / Scenarios</span>
+        <h2 class="cs-section-title">Final design in action</h2>
+        
+        <div class="scenario-grid">
+          
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <h4>Scenario 1</h4>
+              <p>Nanda · Deaf Friend</p>
+            </div>
+            <div class="scenario-content">
+              <h3>Ordering coffee, 1-on-1</h3>
+              <p>Nanda opens Svara Talk in 1-on-1 mode. The front camera reads her sign in real time, the AI turns it into text and speech for the barista, and the barista's reply is captioned back to her live — no more passing a phone back and forth to type.</p>
+              <div class="feat-pills"><span class="feat-pill">Sign-to-text camera</span><span class="feat-pill">Text-to-Speech</span><span class="feat-pill">Listening Box</span></div>
+            </div>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <h4>Scenario 2</h4>
+              <p>Dimas · Speech Friend</p>
+            </div>
+            <div class="scenario-content">
+              <h3>Drive-thru order</h3>
+              <p>Same sign-to-text camera, but because Dimas can hear, the Listening Box/caption layer stays off — he just listens to the cashier directly. When the camera struggles to read his hands, he drops to Frasa Cepat or the manual board without breaking the exchange.</p>
+              <div class="feat-pills"><span class="feat-pill">Sign-to-text camera</span><span class="feat-pill">Frasa Cepat fallback</span></div>
+            </div>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <h4>Scenario 3</h4>
+              <p>Group Sync · 4 people</p>
+            </div>
+            <div class="scenario-content">
+              <h3>A meeting without a human interpreter</h3>
+              <p>Up to four participants, each captioned in their own color. Nanda still needs live caption to follow hearing speakers; Dimas doesn't. Voice Isolation and Voice Match filter out room noise so only registered speakers get transcribed.</p>
+              <div class="feat-pills"><span class="feat-pill">Multi-color live caption</span><span class="feat-pill">PiP sign camera</span><span class="feat-pill">Voice Isolation</span></div>
+            </div>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <h4>Scenario 4</h4>
+              <p>Dimas · Svara Health</p>
+            </div>
+            <div class="scenario-content">
+              <h3>Remote consultation</h3>
+              <p>Dimas marks the pain area on a 3D anatomy avatar instead of typing a description, picks a specialist, and joins a video consult — no live subtitle needed since he hears the doctor directly. His signed answers are converted to speech, confirmed via the Fail-safe pop-up, then logged to his Medical Passport.</p>
+              <div class="feat-pills"><span class="feat-pill">3D Symptom Mapping</span><span class="feat-pill">Medical AI Fail-safe</span><span class="feat-pill">Medical Passport</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <a class="proto-link" href="https://ristek.link/PrototypeSvara" target="_blank" rel="noopener">
+          View interactive prototype <span aria-hidden="true">→</span>
+        </a>
+      </section>
+
+      <!-- 6. Outcome -->
+      <section id="outcome" class="cs-section reveal">
+        <span class="cs-subtitle">06 / Outcome</span>
+        <h2 class="cs-section-title">Reflection</h2>
+        
+        <div class="outcome-list">
+          <div class="outcome-item">
+            <h3>What the survey validated</h3>
+            <p>The three highest-conviction features weren't guesses: 86.1% wanted multi-voice color captions before Group Sync was designed, 72.2% preferred a body map over typing before 3D Symptom Mapping existed, and 86.1% wanted a manual fallback before the Papan Interaktif was built.</p>
+          </div>
+          <div class="outcome-item">
+            <h3>What I'd do differently</h3>
+            <p>Every insight so far comes from a self-report survey (n=36), not moderated usability sessions with the Deaf community. I'd run think-aloud testing directly with Gerkatin members and a live pilot with one clinic before locking the Medical AI Fail-safe interaction, since the highest-risk feature is the one we've validated the least.</p>
+          </div>
+          <div class="outcome-item">
+            <h3>What I learned</h3>
+            <p>Designing "one app" for two different sensory profiles isn't the same as designing one interface twice. The hardest calls weren't visual — they were about when to show a caption and when to hide it, when a fallback is a backup and when it needs to feel just as first-class as the AI path. The BISINDO/SIBI dataset is still smaller than ASL's, and the interpretation risk in a medical context is real, so the honest scope of v1 is daily conversation plus basic medical vocabulary — not a replacement for a certified interpreter yet, but a bridge for the moments no interpreter is there.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="cs-footer container">
+    <p style="color: var(--text-light); font-weight: 500; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em;">Up Next</p>
+    <a href="savor.html" class="next-project-link">Savor Case Study <span aria-hidden="true">→</span></a>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const tocLinks = document.querySelectorAll('.cs-toc-link');
+    const sections = document.querySelectorAll('.cs-section');
+
+    const revealOnScroll = () => {
+      const windowHeight = window.innerHeight;
+      const elementVisible = 100;
+      
+      reveals.forEach(reveal => {
+        const elementTop = reveal.getBoundingClientRect().top;
+        if (elementTop < windowHeight - elementVisible) {
+          reveal.classList.add('active');
+        }
+      });
+
+      // Update TOC active state
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(current) && current !== '') {
+          link.classList.add('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Trigger on load
+    
+    // Smooth scroll for TOC
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

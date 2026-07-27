@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coming Soon — Naya Kusuma</title>
+  <style>
+    :root {
+      --bg-color: #FAF9F6;
+      --text: #1D1D1F;
+      --text-light: #6E6E73;
+      --brand-primary: #1FB6A6;
+      --brand-secondary: #4C5FEA;
+      --brand-glow: rgba(31, 182, 166, 0.15);
+      --bg-card: rgba(255, 255, 255, 0.6);
+      --border: rgba(0, 0, 0, 0.08);
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .ambient-glow {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; z-index: -1;
+    }
+    .ambient-glow::before, .ambient-glow::after {
+      content: ''; position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.6;
+      animation: floatGlow 15s infinite alternate ease-in-out;
+    }
+    .ambient-glow::before {
+      width: 600px; height: 600px; background: var(--brand-glow);
+      top: -100px; left: -200px;
+    }
+    .ambient-glow::after {
+      width: 500px; height: 500px; background: rgba(76, 95, 234, 0.12);
+      bottom: -100px; right: -150px; animation-delay: -5s;
+    }
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 80px) scale(1.1); }
+    }
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 40px;
+      padding: 60px 48px;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.06);
+      max-width: 500px;
+      width: 90%;
+      animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0; transform: translateY(30px);
+    }
+    @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+    .emoji { font-size: 64px; margin-bottom: 24px; display: inline-block; animation: float 4s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; color: var(--text); }
+    p { font-size: 16px; color: var(--text-light); line-height: 1.6; margin-bottom: 40px; font-weight: 500; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+      color: white; font-weight: 700; font-size: 15px;
+      text-decoration: none; border-radius: 100px;
+      transition: var(--transition);
+      box-shadow: 0 8px 24px rgba(31, 182, 166, 0.25);
+    }
+    .btn:hover {
+      transform: translateY(-4px); box-shadow: 0 16px 32px rgba(31, 182, 166, 0.35); filter: brightness(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow"></div>
+  <div class="card">
+    <span class="emoji">✨</span>
+    <h1>Cooking in Progress</h1>
+    <p>I'm still putting the final touches on this pitch deck. Check back soon for the full strategic breakdown!</p>
+    <a href="index.html" class="btn">Back to Portfolio</a>
+  </div>
+</body>
+</html>
