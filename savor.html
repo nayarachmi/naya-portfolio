@@ -510,21 +510,20 @@
     <aside class="cs-toc reveal">
       <p class="cs-toc-title">Contents</p>
       <ul class="cs-toc-list">
-        <li><a href="#problem" class="cs-toc-link">1. The Problem</a></li>
-        <li><a href="#research" class="cs-toc-link">2. Research</a></li>
-        <li><a href="#process" class="cs-toc-link">3. Process</a></li>
-        <li><a href="#logic" class="cs-toc-link">4. Logic</a></li>
-        <li><a href="#output" class="cs-toc-link">5. The Output</a></li>
-        <li><a href="#reflection" class="cs-toc-link">6. Reflection</a></li>
+        <li><a href="#empathize" class="cs-toc-link">1. Empathize</a></li>
+        <li><a href="#define" class="cs-toc-link">2. Define</a></li>
+        <li><a href="#ideate" class="cs-toc-link">3. Ideate</a></li>
+        <li><a href="#prototype" class="cs-toc-link">4. Prototype</a></li>
+        <li><a href="#test" class="cs-toc-link">5. Test &amp; Iterate</a></li>
       </ul>
     </aside>
 
     <!-- Main Content -->
     <main class="cs-content">
 
-      <!-- 1. The Problem -->
-      <section id="problem" class="cs-section reveal">
-        <span class="cs-subtitle">01 / The Problem</span>
+      <!-- 1. Empathize -->
+      <section id="empathize" class="cs-section reveal">
+        <span class="cs-subtitle">01 / Empathize</span>
         <h2 class="cs-section-title">The tragic irony of campus food</h2>
         <p class="cs-paragraph">
           Despite Indonesia discarding up to 48 million tons of food annually, contributing massively to methane emissions, students on campus are routinely skipping meals due to tight budgets. The tragic irony lies in campus canteens throwing away perfectly good unsold food at 5 PM while hungry students study just buildings away.
@@ -540,12 +539,8 @@
             <p class="quote-author">Campus event organizer</p>
           </div>
         </div>
-      </section>
 
-      <!-- 2. Research Findings -->
-      <section id="research" class="cs-section reveal">
-        <span class="cs-subtitle">02 / Research</span>
-        <h2 class="cs-section-title">Validating the assumption</h2>
+        <h3 style="font-size: 24px; margin-top: 48px; margin-bottom: 16px; color: var(--text);">Validating the assumption</h3>
         <p class="cs-paragraph" style="font-weight: 500;">Based on 65 respondents: 35 users (students + general public) and 30 merchants (canteens, cafes, warungs).</p>
 
         <div class="bento-grid">
@@ -583,39 +578,28 @@
         </div>
       </section>
 
-      <!-- 3. Process -->
-      <section id="process" class="cs-section reveal">
-        <span class="cs-subtitle">03 / Process</span>
-        <h2 class="cs-section-title">How we got there</h2>
-
-        <div class="process-timeline">
-          <div class="process-step" data-step="1">
-            <h3>Empathize</h3>
-            <p>3-day field observation at campus canteens (2–5 PM). Semi-structured interviews with 10 students + 10 merchants. 65-respondent online survey.</p>
+      <!-- 2. Define -->
+      <section id="define" class="cs-section reveal">
+        <span class="cs-subtitle">02 / Define</span>
+        <h2 class="cs-section-title">Defining the core challenges</h2>
+        <p class="cs-paragraph">Based on the research findings, we identified two critical "How Might We" (HMW) statements to guide our ideation:</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 32px;">
+          <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+            <h3 style="font-size: 20px; color: var(--brand-secondary-deep); margin-bottom: 12px;">HMW #1</h3>
+            <p style="font-size: 16px; color: var(--text); line-height: 1.6;">How might we help merchants distribute surplus food in under 5 minutes of input?</p>
           </div>
-          <div class="process-step" data-step="2">
-            <h3>Define</h3>
-            <p>How might we help merchants distribute surplus food in under 5 minutes of input? And how might we make budget-conscious students feel they're getting real value, not just 'buying leftovers'?</p>
-          </div>
-          <div class="process-step" data-step="3">
-            <h3>Ideate</h3>
-            <p>Crazy 8s → 24 rough concepts → dot voting → 3 core features prioritized: Savor Box, Savor Circles, Savor Points.</p>
-          </div>
-          <div class="process-step" data-step="4">
-            <h3>Prototype</h3>
-            <p>Lo-fi wireframes to validate IA (max 4 taps to complete a Savor Box transaction). Then full high-fidelity with documented design system.</p>
-          </div>
-          <div class="process-step" data-step="5">
-            <h3>Test + iterate</h3>
-            <p>Think-aloud usability testing with 5 users (3 students, 2 merchants). Severity rating 1–4 per issue. 3 critical fixes shipped in next sprint.</p>
+          <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+            <h3 style="font-size: 20px; color: var(--brand-primary-deep); margin-bottom: 12px;">HMW #2</h3>
+            <p style="font-size: 16px; color: var(--text); line-height: 1.6;">How might we make budget-conscious students feel they're getting real value, not just 'buying leftovers'?</p>
           </div>
         </div>
       </section>
 
-      <!-- 4. Key Decisions -->
-      <section id="logic" class="cs-section reveal">
-        <span class="cs-subtitle">04 / Logic</span>
-        <h2 class="cs-section-title">Key design decisions</h2>
+      <!-- 3. Ideate -->
+      <section id="ideate" class="cs-section reveal">
+        <span class="cs-subtitle">03 / Ideate</span>
+        <h2 class="cs-section-title">Ideation &amp; Key Decisions</h2>
         <p class="cs-paragraph">The "why" behind the screens.</p>
 
         <div class="decisions-grid">
@@ -638,18 +622,18 @@
         </div>
       </section>
 
-      <!-- 5. Final Design -->
-      <section id="output" class="cs-section reveal">
-        <span class="cs-subtitle">05 / The Output</span>
-        <h2 class="cs-section-title">Final polished UI</h2>
+      <!-- 4. Prototype -->
+      <section id="prototype" class="cs-section reveal">
+        <span class="cs-subtitle">04 / Prototype</span>
+        <h2 class="cs-section-title">Prototyping &amp; Final UI</h2>
         
         <img src="assets/savor_final.png" alt="Savor Final UI Design" style="width: 100%; height: auto; display: block; border-radius: var(--radius-lg); margin-top: 32px; box-shadow: var(--shadow-sm);">
       </section>
 
-      <!-- 6. Outcome -->
-      <section id="reflection" class="cs-section reveal">
-        <span class="cs-subtitle">06 / Reflection</span>
-        <h2 class="cs-section-title">Outcome & lessons learned</h2>
+      <!-- 5. Test & Iterate -->
+      <section id="test" class="cs-section reveal">
+        <span class="cs-subtitle">05 / Test &amp; Iterate</span>
+        <h2 class="cs-section-title">Outcome &amp; lessons learned</h2>
 
         <div class="outcome-list">
           <div class="outcome-item">

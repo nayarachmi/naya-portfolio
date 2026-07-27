@@ -533,23 +533,21 @@
     <aside class="cs-toc reveal">
       <p class="cs-toc-title">Contents</p>
       <ul class="cs-toc-list">
-        <li><a href="#problem" class="cs-toc-link">1. The Problem</a></li>
-        <li><a href="#research" class="cs-toc-link">2. Research Findings</a></li>
-        <li><a href="#process" class="cs-toc-link">3. Design Process</a></li>
-        <li><a href="#decisions" class="cs-toc-link">4. Key Decisions</a></li>
-        <li><a href="#scenarios" class="cs-toc-link">5. Scenarios</a></li>
-        <li><a href="#final-ui" class="cs-toc-link">6. Final Polished UI</a></li>
-        <li><a href="#outcome" class="cs-toc-link">7. Outcome &amp; Reflection</a></li>
+        <li><a href="#empathize" class="cs-toc-link">1. Empathize</a></li>
+        <li><a href="#define" class="cs-toc-link">2. Define</a></li>
+        <li><a href="#ideate" class="cs-toc-link">3. Ideate</a></li>
+        <li><a href="#prototype" class="cs-toc-link">4. Prototype</a></li>
+        <li><a href="#test" class="cs-toc-link">5. Test &amp; Iterate</a></li>
       </ul>
     </aside>
 
     <!-- Main Content -->
     <main class="cs-content">
 
-      <!-- 1. The Problem -->
-      <section id="problem" class="cs-section reveal">
-        <span class="cs-subtitle">01 / The Problem</span>
-        <h2 class="cs-section-title">Bridging the communication gap</h2>
+      <!-- 1. Empathize -->
+      <section id="empathize" class="cs-section reveal">
+        <span class="cs-subtitle">01 / Empathize</span>
+        <h2 class="cs-section-title">Understanding the communication gap</h2>
         <p class="cs-paragraph">
           Indonesia has more than 22.97 million people with disabilities, with the deaf/speech-impaired community as one of the largest groups — yet certified sign language interpreters remain scarce. That gap forces Deaf Friend and Speech Friend to depend on a companion for public interactions and for private, sensitive moments like a doctor's visit.
         </p>
@@ -557,7 +555,7 @@
           Existing solutions treat this as one problem, offering the same generic interface to someone who relies entirely on visual cues (Deaf Friend) and someone who can hear but struggles to speak (Speech Friend) — even though their communication needs are fundamentally different.
         </p>
 
-        <div class="pull-quotes-container" style="margin-top: 40px;">
+        <div class="pull-quotes-container" style="margin-top: 40px; margin-bottom: 40px;">
           <div class="pull-quote">
             <p class="quote-text">"When a Deaf patient comes in alone and in pain, we struggle to ask about drug allergies or how the injury happened."</p>
             <p class="quote-author">Adrian, medical staff respondent</p>
@@ -567,12 +565,8 @@
             <p class="quote-author">Mussallem et al., 2022</p>
           </div>
         </div>
-      </section>
 
-      <!-- 2. Research Findings -->
-      <section id="research" class="cs-section reveal">
-        <span class="cs-subtitle">02 / Research Findings</span>
-        <h2 class="cs-section-title">Validating the barriers</h2>
+        <h3 style="font-size: 24px; margin-bottom: 16px; color: var(--text);">Validating the barriers</h3>
         <p class="cs-paragraph" style="font-weight: 500; font-size: 16px; color: var(--brand-primary-deep);">n = 36 (Deaf Friend/Speech Friend, general public, medical staff). Biggest reported barrier to talking with hearing people: not knowing sign language and fear of being misunderstood (68.2% each).</p>
 
         <div class="bento-grid">
@@ -603,39 +597,29 @@
         </div>
       </section>
 
-      <!-- 3. Design Process -->
-      <section id="process" class="cs-section reveal">
-        <span class="cs-subtitle">03 / Process</span>
-        <h2 class="cs-section-title">How we got there</h2>
+      <!-- 2. Define -->
+      <section id="define" class="cs-section reveal">
+        <span class="cs-subtitle">02 / Define</span>
+        <h2 class="cs-section-title">Defining the core challenges</h2>
+        <p class="cs-paragraph">Based on the research findings, we identified two critical "How Might We" (HMW) statements to guide our ideation:</p>
         
-        <div class="process-timeline">
-          <div class="process-step" data-step="1">
-            <h3>Empathize</h3>
-            <p>Online survey, "Communication &amp; Healthcare Accessibility," across three groups — Deaf Friend/Speech Friend, the general public, and medical staff — mapping public-space communication and clinic-visit experiences.</p>
+        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 32px;">
+          <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+            <h3 style="font-size: 20px; color: var(--brand-secondary-deep); margin-bottom: 12px;">HMW #1</h3>
+            <p style="font-size: 16px; color: var(--text); line-height: 1.6;">How might we help a patient describe pain location and severity accurately without relying on typing while in distress?</p>
           </div>
-          <div class="process-step" data-step="2">
-            <h3>Define</h3>
-            <p>Two HMWs from the data: how to help a patient describe pain location and severity without typing while in distress, and how to keep communication working when the AI misses a gesture in poor light or a weak signal.</p>
-          </div>
-          <div class="process-step" data-step="3">
-            <h3>Ideate</h3>
-            <p>Crazy 8s → dot voting → feasibility review. Landed on one adaptive Context-Aware UI instead of two separate apps, plus three safety layers: Smart Keyboard, Medical Predictive Text, and the Papan Interaktif fallback.</p>
-          </div>
-          <div class="process-step" data-step="4">
-            <h3>Prototype</h3>
-            <p>Low-fidelity wireframes first, to validate the Dynamic Onboarding flow that lets someone set their sensory profile in a few clear steps — then a documented high-fidelity system (palette, type, reusable components).</p>
-          </div>
-          <div class="process-step" data-step="5">
-            <h3>Test &amp; iterate</h3>
-            <p>Think-aloud usability testing with Deaf Friend, Speech Friend, and medical staff, severity-rated per issue, fed back into the prototype stage.</p>
+          <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+            <h3 style="font-size: 20px; color: var(--brand-primary-deep); margin-bottom: 12px;">HMW #2</h3>
+            <p style="font-size: 16px; color: var(--text); line-height: 1.6;">How might we ensure communication remains uninterrupted when the AI fails to read a gesture due to poor lighting or a weak signal?</p>
           </div>
         </div>
       </section>
 
-      <!-- 4. Key Design Decisions -->
-      <section id="decisions" class="cs-section reveal">
-        <span class="cs-subtitle">04 / Key Decisions</span>
-        <h2 class="cs-section-title">Shaping the experience</h2>
+      <!-- 3. Ideate -->
+      <section id="ideate" class="cs-section reveal">
+        <span class="cs-subtitle">03 / Ideate</span>
+        <h2 class="cs-section-title">Ideation &amp; Key Decisions</h2>
+        <p class="cs-paragraph" style="margin-bottom: 40px;">After a round of Crazy 8s and dot voting, we decided to pivot from two separate apps to a single adaptive app. Here are the core solutions we landed on:</p>
         
         <div class="decisions-grid">
           <div class="decision-card tuli">
@@ -657,10 +641,11 @@
         </div>
       </section>
 
-      <!-- 5. Usage Scenarios -->
-      <section id="scenarios" class="cs-section reveal">
-        <span class="cs-subtitle">05 / Scenarios</span>
-        <h2 class="cs-section-title">Final design in action</h2>
+      <!-- 4. Prototype -->
+      <section id="prototype" class="cs-section reveal">
+        <span class="cs-subtitle">04 / Prototype</span>
+        <h2 class="cs-section-title">Prototyping &amp; Scenarios</h2>
+        <p class="cs-paragraph">We moved from low-fidelity wireframes to a fully documented high-fidelity system. Below is how the interface adapts to different user scenarios.</p>
         
         <div class="scenario-grid">
           
@@ -715,21 +700,18 @@
         </div>
       </section>
 
-      <!-- 6. Final Polished UI -->
-      <section id="final-ui" class="cs-section reveal">
-        <span class="cs-subtitle">06 / Final UI</span>
-        <h2 class="cs-section-title">Final polished UI</h2>
-        <p class="cs-paragraph">A clean, accessible interface designed for both Deaf Friend and Speech Friend. High-contrast teal and blue palettes are used to maintain visibility without causing visual fatigue.</p>
+      <div style="margin-top: 60px;"></div>
+      <!-- Final Polished UI (still under Prototype) -->
+      <div id="final-ui" class="reveal" style="margin-bottom: 120px;">
+        <h3 class="cs-section-title" style="font-size: 28px;">Final polished UI</h3>
         
-        <div style="margin-top: 40px; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); background: var(--bg-card-solid); border: 1px solid var(--border); padding: 24px;">
-          <img src="assets/svara-2.png" alt="Svara Final UI" style="width: 100%; height: auto; border-radius: var(--radius-lg); display: block;">
-        </div>
-      </section>
+        <img src="assets/svara-4.png" alt="Svara Final UI" style="width: 100%; height: auto; display: block; border-radius: var(--radius-lg); margin-top: 32px; box-shadow: var(--shadow-sm);">
+      </div>
 
-      <!-- 7. Outcome -->
-      <section id="outcome" class="cs-section reveal">
-        <span class="cs-subtitle">07 / Outcome</span>
-        <h2 class="cs-section-title">Reflection</h2>
+      <!-- 5. Test & Iterate -->
+      <section id="test" class="cs-section reveal">
+        <span class="cs-subtitle">05 / Test &amp; Iterate</span>
+        <h2 class="cs-section-title">Outcome &amp; Reflection</h2>
         
         <div class="outcome-list">
           <div class="outcome-item">
