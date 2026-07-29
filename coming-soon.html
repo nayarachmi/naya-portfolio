@@ -12,15 +12,12 @@
       --brand-primary: #1FB6A6;
       --brand-secondary: #4C5FEA;
       --brand-glow: rgba(31, 182, 166, 0.15);
-      --bg-card: rgba(255, 255, 255, 0.6);
-      --border: rgba(0, 0, 0, 0.08);
-      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif;
       background-color: var(--bg-color);
-      color: var(--text);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -30,7 +27,7 @@
     }
     .ambient-glow {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none; z-index: -1;
+      pointer-events: none; z-index: 1;
     }
     .ambient-glow::before, .ambient-glow::after {
       content: ''; position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.6;
@@ -48,46 +45,105 @@
       0% { transform: translate(0, 0) scale(1); }
       100% { transform: translate(50px, 80px) scale(1.1); }
     }
-    .card {
-      background: var(--bg-card);
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      border-radius: 40px;
-      padding: 60px 48px;
+    .alert-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(250, 249, 246, 0.6); /* very light backdrop */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    .alert-box {
+      width: 320px;
+      background: #FFFFFF;
+      border-radius: 24px;
       text-align: center;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.06);
-      max-width: 500px;
-      width: 90%;
-      animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0; transform: translateY(30px);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0; transform: translateY(20px) scale(0.95);
     }
-    @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
-    .emoji { font-size: 64px; margin-bottom: 24px; display: inline-block; animation: float 4s ease-in-out infinite; }
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; color: var(--text); }
-    p { font-size: 16px; color: var(--text-light); line-height: 1.6; margin-bottom: 40px; font-weight: 500; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 14px 28px;
-      background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-      color: white; font-weight: 700; font-size: 15px;
-      text-decoration: none; border-radius: 100px;
-      transition: var(--transition);
-      box-shadow: 0 8px 24px rgba(31, 182, 166, 0.25);
+    @keyframes revealUp { to { opacity: 1; transform: translateY(0) scale(1); } }
+    .alert-content {
+      padding: 32px 24px 24px 24px;
     }
-    .btn:hover {
-      transform: translateY(-4px); box-shadow: 0 16px 32px rgba(31, 182, 166, 0.35); filter: brightness(1.1);
+    .alert-emoji {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: inline-block;
+      animation: float 4s ease-in-out infinite;
+    }
+    .alert-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1D1D1F;
+      margin: 0 0 8px 0;
+      line-height: 1.3;
+    }
+    .alert-message {
+      font-size: 14px;
+      font-weight: 400;
+      color: #6E6E73;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .alert-actions {
+      display: flex;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      height: 56px;
+    }
+    .alert-button {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #007AFF;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .alert-button:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    .alert-button:active {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .alert-button.cancel {
+      font-weight: 500;
+      border-bottom-left-radius: 24px;
+    }
+    .alert-button.default {
+      font-weight: 600;
+      border-left: 1px solid rgba(0, 0, 0, 0.06);
+      border-bottom-right-radius: 24px;
     }
   </style>
 </head>
 <body>
   <div class="ambient-glow"></div>
-  <div class="card">
-    <span class="emoji">✨</span>
-    <h1>Cooking in Progress</h1>
-    <p>I'm still putting the final touches on this pitch deck. Check back soon for the full strategic breakdown!</p>
-    <a href="index.html" class="btn">Back to Portfolio</a>
+  <div class="alert-backdrop">
+    <div class="alert-box">
+      <div class="alert-content">
+        <span class="alert-emoji">✨</span>
+        <h2 class="alert-title">Coming Soon</h2>
+        <p class="alert-message">I'm still putting the final touches on this pitch deck. Check back soon for the full strategic breakdown!</p>
+      </div>
+      <div class="alert-actions">
+        <a href="index.html" class="alert-button cancel">Not Now</a>
+        <a href="index.html" class="alert-button default">Go Back</a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
