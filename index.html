@@ -1043,6 +1043,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .achieve-item:hover {
+      background: rgba(0,0,0,0.03);
     }
     .achieve-item:last-child {
       border-bottom: none;
@@ -1871,6 +1876,81 @@
         justify-content: center;
       }
     }
+
+    /* Photo Booth Popup */
+    .photo-booth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    .photo-booth-window {
+      background: #f6f6f6;
+      border-radius: 12px;
+      width: fit-content;
+      max-width: 90vw;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ddd;
+    }
+    .pb-header {
+      height: 40px;
+      background: linear-gradient(to bottom, #efefef, #e2e2e2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-bottom: 1px solid #ccc;
+    }
+    .pb-dots {
+      position: absolute;
+      left: 15px;
+      display: flex;
+      gap: 8px;
+    }
+    .pb-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .pb-dot-red { background: #FF5F56; border: 1px solid #E0443E; }
+    .pb-dot-yellow { background: #FFBD2E; border: 1px solid #DEA123; }
+    .pb-dot-green { background: #27C93F; border: 1px solid #1AAB29; }
+    .pb-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+    .pb-content {
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .pb-image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .pb-image-container img {
+      width: auto;
+      height: auto;
+      max-width: 90vw;
+      max-height: 85vh;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -2116,20 +2196,24 @@
             <span style="font-size:16px;cursor:pointer;">⎋</span>
           </div>
           <ul class="achieve-list">
-            <li class="achieve-item">
+            <li class="achieve-item" onclick="openPhotoBooth('assets/sertifikat/sertifikat iofest.jpeg')">
               <span>🥇 <strong>1st Winner</strong> — I/O FESTIVAL 2026 UI/UX Competition (Univ. Tarumanagara)</span>
               <span style="color:#CCC;">↗</span>
             </li>
-            <li class="achieve-item">
+            <li class="achieve-item" onclick="openPhotoBooth('assets/sertifikat/sertifikat action.jpeg')">
               <span>🏅 <strong>Finalist</strong> — ACTION 2025 UI/UX Competition (Univ. Negeri Surabaya)</span>
               <span style="color:#CCC;">↗</span>
             </li>
-            <li class="achieve-item">
+            <li class="achieve-item" onclick="openPhotoBooth('assets/sertifikat/sertifikat infest.jpeg')">
               <span>🥉 <strong>3rd Winner</strong> — INFEST 2025 UI/UX Competition (Univ. Syiah Kuala)</span>
               <span style="color:#CCC;">↗</span>
             </li>
-            <li class="achieve-item">
+            <li class="achieve-item" onclick="openPhotoBooth('assets/sertifikat/sertifikat pekan ristek.jpeg')">
               <span>🏆 <strong>Runner-Up</strong> — Pekan Ristek UI/UX Competition (Ristek Fasilkom UI)</span>
+              <span style="color:#CCC;">↗</span>
+            </li>
+            <li class="achieve-item">
+              <span>🏅 <strong>Finalist</strong> — INSPACE 2026 UI/UX Competition (Institut Teknologi Kalimantan)</span>
               <span style="color:#CCC;">↗</span>
             </li>
           </ul>
@@ -2276,7 +2360,7 @@
                 </div>
                 <span class="project-link-time">6:40 AM</span>
               </a>
-              <a href="coming-soon.html" class="project-link-item" role="listitem" aria-label="Open Svara pitch deck">
+              <a href="https://canva.link/005o83rwesnw6ce" class="project-link-item" role="listitem" target="_blank" rel="noopener noreferrer" aria-label="Open Svara pitch deck">
                 <div class="project-link-icon" style="background:#E8F5E9;">📊</div>
                 <div class="project-link-content">
                   <p class="project-link-title">Open Pitch Deck</p>
@@ -2779,6 +2863,35 @@
       }
     }
 
+  </script>
+
+  <!-- Photo Booth Popup -->
+  <div id="photo-booth-popup" class="photo-booth-overlay" onclick="closePhotoBooth()">
+    <div class="photo-booth-window" onclick="event.stopPropagation()">
+      <div class="pb-header">
+        <div class="pb-dots">
+          <div class="pb-dot pb-dot-red" onclick="closePhotoBooth()"></div>
+          <div class="pb-dot pb-dot-yellow"></div>
+          <div class="pb-dot pb-dot-green"></div>
+        </div>
+        <span class="pb-title">Certificate</span>
+      </div>
+      <div class="pb-content">
+        <div class="pb-image-container">
+          <img id="pb-image" src="" alt="Certificate" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openPhotoBooth(imageSrc) {
+      document.getElementById('pb-image').src = imageSrc;
+      document.getElementById('photo-booth-popup').style.display = 'flex';
+    }
+    function closePhotoBooth() {
+      document.getElementById('photo-booth-popup').style.display = 'none';
+    }
   </script>
 </body>
 </html>
