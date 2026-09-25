@@ -42,9 +42,9 @@
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👩🏻‍💻</text></svg>" />
   <meta name="description"
-    content="Hi, I'm Naya Kusuma — an aspiring UI/UX Designer crafting fresh digital experiences. Explore my case studies in mobile app design." />
+    content="Hi, I'm Naya Kusuma — an aspiring Product Designer crafting fresh digital experiences. Explore my case studies in mobile app design." />
   <meta property="og:title" content="Naya Kusuma's Portfolio" />
-  <meta property="og:description" content="Aspiring UI/UX Designer crafting fresh digital experiences." />
+  <meta property="og:description" content="Aspiring Product Designer crafting fresh digital experiences." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1764,9 +1764,23 @@
     }
 
     .project-detail-tagline {
-      font-size: 16px;
-      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-light);
+      margin-top: 8px;
       margin-bottom: 32px;
+      letter-spacing: 0.02em;
+    }
+    .project-detail-tagline::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--dot-color, var(--text-light));
     }
 
     /* Notification-style links (from Figma) */
@@ -2634,11 +2648,11 @@
         </span>
       </div>
 
-      <!-- Line 3: aspiring [UI/UX Designer |] -->
-      <div class="hero-line3 reveal reveal-delay-2" aria-label="aspiring UI/UX Designer">
+      <!-- Line 3: aspiring [Product Designer |] -->
+      <div class="hero-line3 reveal reveal-delay-2" aria-label="aspiring Product Designer">
         <span class="hero-aspiring">aspiring</span>
         <span class="hero-role-wrap" aria-hidden="true">
-          <span class="hero-role-box">UI/UX Designer</span>
+          <span class="hero-role-box">Product Designer</span>
         </span>
       </div>
 
@@ -2774,7 +2788,7 @@
             <div class="notes-content">
               <div class="notes-content-date">6 March at 06:03 AM</div>
               <p class="about-hello">Hi, I'm Naya Kusuma! 👋</p>
-              <p class="about-subtitle">I am a UI/UX Designer with a strong appreciation for technical feasibility</p>
+              <p class="about-subtitle">I am a Product Designer with a strong appreciation for technical feasibility</p>
               <div class="about-bio">
                 <p>For me, design is not just about aesthetics; it's about translating complex logic into intuitive,
                   human-friendly experiences. I love exploring the intersection of creativity and technology, ensuring
@@ -3007,7 +3021,7 @@
               <img src="assets/logo_svara.png" alt="Svara Logo" class="project-detail-name"
                 style="height: 120px; width: auto; max-width: 100%; object-fit: contain; display: block;">
             </div>
-            <p class="project-detail-tagline" style="color:#4C5FEA;">inclusive communication & health</p>
+            <p class="project-detail-tagline" style="--dot-color:#4C5FEA;">inclusive communication & health</p>
 
             <div class="project-links" role="list" aria-label="Svara project links">
               <a href="svara.html" class="project-link-item" role="listitem" aria-label="View Svara case study">
@@ -3058,7 +3072,7 @@
               <img src="assets/logo_cropped_savor.png" alt="Savor Logo" class="project-detail-name"
                 style="height: 100px; width: auto; object-fit: contain; display: block;">
             </div>
-            <p class="project-detail-tagline" style="color:#C0392B;">hyper-local food rescue ecosystem</p>
+            <p class="project-detail-tagline" style="--dot-color:#C0392B;">hyper-local food rescue ecosystem</p>
 
             <div class="project-links" role="list" aria-label="Savor project links">
               <a href="savor.html" class="project-link-item" role="listitem" aria-label="View Savor case study">
@@ -3111,7 +3125,7 @@
               <img src="assets/logo_cropped_ecosync.png" alt="EcoSync Logo" class="project-detail-name"
                 style="height: 100px; width: auto; object-fit: contain; display: block;">
             </div>
-            <p class="project-detail-tagline" style="color:#27AE60;">digitizing the circular waste economy</p>
+            <p class="project-detail-tagline" style="--dot-color:#27AE60;">digitizing the circular waste economy</p>
 
             <div class="project-links" role="list" aria-label="EcoSync project links">
               <a href="ecosync.html" class="project-link-item" role="listitem" aria-label="View EcoSync case study">
@@ -3163,7 +3177,7 @@
               <img src="assets/logo_cropped_cookmate.png" alt="CookMate Logo" class="project-detail-name"
                 style="height: 100px; width: auto; object-fit: contain; display: block;">
             </div>
-            <p class="project-detail-tagline" style="color:#6B8E23;">tech-driven innovation for smarter eating</p>
+            <p class="project-detail-tagline" style="--dot-color:#6B8E23;">tech-driven innovation for smarter eating</p>
 
             <div class="project-links" role="list" aria-label="CookMate project links">
               <a href="cookmate.html" class="project-link-item" role="listitem" aria-label="View CookMate case study">
@@ -3214,8 +3228,11 @@
 
           <!-- Logo Side -->
           <div class="rangkai-panel">
-            <img src="assets/logo_rangkai.png" alt="rangkAI Logo" class="rangkai-logo"
-              style="height: 160px; max-width: 100%; object-fit: contain;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <img src="assets/logo_rangkai.png" alt="rangkAI Logo" class="rangkai-logo"
+                style="height: 160px; max-width: 100%; object-fit: contain;">
+              <p class="project-detail-tagline" style="--dot-color:#3B82F6; margin-bottom: 0;">Cosmetics AI Formulation Co-Pilot</p>
+            </div>
           </div>
 
           <!-- Buttons Side -->
@@ -3267,7 +3284,7 @@
         </div>
 
         <div class="skills-path">
-          <div class="skill-sticky reveal" role="article" aria-label="UI/UX Design skills">
+          <div class="skill-sticky reveal" role="article" aria-label="Product Design skills">
             <div class="sticky-tape"></div>
             <h3 class="skill-card-title">UI Design</h3>
             <p class="skill-desc">Crafting intuitive and aesthetically pleasing interfaces.</p>
@@ -3336,7 +3353,7 @@
                 Hope you enjoyed the journey! 😊
               </div>
               <div class="bubble-received" role="article" aria-label="Message from Naya">
-                I'm currently open for <strong>UI/UX full-time roles</strong>, <strong>internship
+                I'm currently open for <strong>Product Design full-time roles</strong>, <strong>internship
                   opportunities</strong>, or just any cool design <strong>collaborations</strong> 🎨
               </div>
               <div class="bubble-received" role="article" aria-label="Message from Naya">
