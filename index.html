@@ -1659,6 +1659,24 @@
       flex: 1;
     }
 
+    /* RangkAI specific adjustments */
+    .rangkai-bottom {
+      min-height: 300px;
+      align-items: center;
+    }
+    .rangkai-panel {
+      padding: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .rangkai-links-panel {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
     .project-detail-mockup {
       position: relative;
       overflow: hidden;
@@ -2350,6 +2368,13 @@
 
       .project-detail-mockup {
         min-height: 300px;
+      }
+      
+      .rangkai-panel, .rangkai-links-panel {
+        padding: 24px;
+      }
+      .rangkai-logo {
+        height: 100px !important;
       }
 
       .finder-content {
@@ -3185,16 +3210,16 @@
         </div>
 
         <!-- Info & Links (Bottom Half) -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: 300px; flex: 1;">
+        <div class="project-detail-layout rangkai-bottom">
 
           <!-- Logo Side -->
-          <div style="display: flex; justify-content: center; align-items: center; padding: 48px;">
-            <img src="assets/logo_rangkai.png" alt="rangkAI Logo"
+          <div class="rangkai-panel">
+            <img src="assets/logo_rangkai.png" alt="rangkAI Logo" class="rangkai-logo"
               style="height: 160px; max-width: 100%; object-fit: contain;">
           </div>
 
           <!-- Buttons Side -->
-          <div style="padding: 48px; display: flex; flex-direction: column; justify-content: center;">
+          <div class="rangkai-links-panel">
             <div class="project-links" role="list" aria-label="rangkAI project links">
               <a href="https://rangk-ai-findr.vercel.app" class="project-link-item" role="listitem" target="_blank"
                 rel="noopener noreferrer" aria-label="Access Web">
